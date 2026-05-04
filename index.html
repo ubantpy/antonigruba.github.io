@@ -1,9 +1,1297 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Antoni Gruba</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antoni Gruba — Mobile & Data Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Variables ─────────────────────────────────── */
+    :root {
+      --cream: #f7f4ef;
+      --white: #ffffff;
+      --ink: #1a1a1a;
+      --ink-light: #4a4a4a;
+      --ink-muted: #8a8a8a;
+      --accent: #2a5c45;
+      --accent-light: #3d7a5e;
+      --accent-pale: #e8f2ed;
+      --border: #e0dbd3;
+      --shadow: 0 2px 20px rgba(0,0,0,0.07);
+      --shadow-hover: 0 8px 40px rgba(0,0,0,0.13);
+      --radius: 12px;
+      --max-w: 900px;
+    }
+
+    /* ─── Reset ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ─── Typography ─────────────────────────────────── */
+    h1, h2, h3 { font-family: 'DM Serif Display', serif; font-weight: 400; }
+    h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); line-height: 1.08; }
+    h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+    h3 { font-size: 1.2rem; }
+    p { color: var(--ink-light); }
+
+    /* ─── Layout ─────────────────────────────────────── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+    section { padding: 5rem 0; }
+    section:nth-child(even) { background: var(--white); }
+
+    /* ─── Nav ────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(247,244,239,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--ink-light);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ─── Hero ───────────────────────────────────────── */
+    #hero {
+      padding: 9rem 0 5rem;
+      background: var(--cream);
+    }
+    .hero-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 2rem;
+      display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-pale);
+      padding: 0.3rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.2rem;
+    }
+    .hero-title { margin-bottom: 1.2rem; color: var(--ink); }
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--ink-light);
+      max-width: 520px;
+      margin-bottom: 2rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.6rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: var(--shadow-hover); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+    .hero-photo {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--white);
+      box-shadow: var(--shadow-hover);
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-photo-placeholder {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: var(--accent-pale);
+      border: 4px solid var(--white);
+      box-shadow: var(--shadow-hover);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .hero-stats {
+      display: flex; gap: 2rem; margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--ink-muted); margin-top: 0.2rem; }
+
+    /* ─── Section Header ─────────────────────────────── */
+    .section-header { margin-bottom: 3rem; }
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .section-header h2 { color: var(--ink); }
+
+    /* ─── About ──────────────────────────────────────── */
+    #about .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .about-text p { margin-bottom: 1rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-facts { display: flex; flex-direction: column; gap: 1rem; }
+    .fact-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: var(--cream);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .fact-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .fact-label { font-size: 0.75rem; color: var(--ink-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+    .fact-value { font-size: 0.9rem; color: var(--ink); font-weight: 500; }
+
+    /* ─── Projects ───────────────────────────────────── */
+    .projects-grid { display: grid; gap: 1.5rem; }
+    .project-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .project-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+    .project-card.featured { grid-column: 1 / -1; }
+    .project-img-placeholder {
+      width: 100%; height: 200px;
+      background: var(--accent-pale);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+    }
+    .project-body { padding: 1.5rem; }
+    .project-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-pale);
+      padding: 0.2rem 0.7rem;
+      border-radius: 100px;
+      margin-bottom: 0.8rem;
+    }
+    .project-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+    .project-card p { font-size: 0.9rem; margin-bottom: 1rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .tag {
+      font-size: 0.75rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      color: var(--ink-light);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    .project-links { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+      padding: 0.4rem 0.9rem;
+      border: 1.5px solid var(--accent);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .project-link:hover { background: var(--accent); color: white; }
+    .project-link.secondary {
+      color: var(--ink-muted);
+      border-color: var(--border);
+    }
+    .project-link.secondary:hover { background: var(--ink); color: white; border-color: var(--ink); }
+
+    /* Two column grid for smaller projects */
+    .projects-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    /* ─── Experience ─────────────────────────────────── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 2rem;
+      position: relative;
+      padding-bottom: 2.5rem;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 140px;
+      top: 8px; bottom: 0;
+      width: 1px;
+      background: var(--border);
+      transform: translateX(calc(2rem / 2 - 0.5px));
+    }
+    .timeline-item:last-child::before { display: none; }
+    .timeline-date {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      font-weight: 500;
+      padding-top: 0.2rem;
+      text-align: right;
+    }
+    .timeline-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--white);
+      box-shadow: 0 0 0 2px var(--accent);
+      position: absolute;
+      left: 140px;
+      top: 6px;
+      transform: translateX(calc(2rem / 2 - 5px));
+      z-index: 1;
+    }
+    .timeline-content { padding-left: 1.5rem; }
+    .timeline-company {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+    }
+    .timeline-role {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .timeline-desc {
+      font-size: 0.875rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+    }
+
+    /* ─── Skills ─────────────────────────────────────── */
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .skill-group {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .skill-group-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-pill {
+      font-size: 0.82rem;
+      font-weight: 500;
+      background: var(--white);
+      border: 1px solid var(--border);
+      color: var(--ink);
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+    }
+
+    /* ─── Contact ────────────────────────────────────── */
+    #contact { background: var(--white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+    .contact-link-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: all 0.2s;
+      background: var(--cream);
+    }
+    .contact-link-item:hover { border-color: var(--accent); transform: translateX(4px); }
+    .contact-link-icon { font-size: 1.3rem; }
+    .contact-link-label { font-size: 0.75rem; color: var(--ink-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+    .contact-link-value { font-size: 0.9rem; color: var(--ink); font-weight: 500; }
+
+    /* Form */
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    label { font-size: 0.82rem; font-weight: 600; color: var(--ink); }
+    input, textarea {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--cream);
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+    input:focus, textarea:focus { border-color: var(--accent); }
+    textarea { min-height: 120px; }
+    .form-submit {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    /* ─── Footer ─────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.82rem;
+    }
+    footer span { color: rgba(255,255,255,0.8); }
+
+    /* ─── Animations ─────────────────────────────────── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── Simple View ────────────────────────────────── */
+    #simple-view {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: var(--white);
+      overflow-y: auto;
+    }
+    #simple-view.active { display: block; }
+
+    .sv-close {
+      position: fixed;
+      top: 1.2rem; right: 1.5rem;
+      z-index: 210;
+      background: var(--ink);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .sv-close:hover { background: #333; }
+
+    .sv-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 4rem;
+    }
+
+    /* Header */
+    .sv-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: start;
+      padding-bottom: 1.8rem;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 1.8rem;
+    }
+    .sv-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 0.3rem;
+    }
+    .sv-title {
+      font-size: 0.95rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+    .sv-contact-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem 1.2rem;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+    .sv-contact-line a { color: var(--ink-light); transition: color 0.2s; }
+    .sv-contact-line a:hover { color: var(--accent); }
+    .sv-photo-placeholder {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: var(--accent-pale);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
+      border: 3px solid var(--border);
+    }
+
+    /* Sections */
+    .sv-section { margin-bottom: 1.8rem; }
+    .sv-section-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Summary */
+    .sv-summary {
+      font-size: 0.9rem;
+      color: var(--ink-light);
+      line-height: 1.7;
+    }
+
+    /* Experience */
+    .sv-job { margin-bottom: 1.2rem; }
+    .sv-job:last-child { margin-bottom: 0; }
+    .sv-job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 0.2rem;
+    }
+    .sv-job-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+    .sv-job-date {
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      white-space: nowrap;
+    }
+    .sv-job-company {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .sv-job ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .sv-job ul li {
+      font-size: 0.85rem;
+      color: var(--ink-light);
+      padding-left: 1rem;
+      position: relative;
+    }
+    .sv-job ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--ink-muted);
+    }
+
+    /* Projects */
+    .sv-projects { display: flex; flex-direction: column; gap: 1.2rem; }
+    .sv-project {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+      padding: 1rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--cream);
+    }
+    .sv-project-img {
+      width: 110px; height: 70px;
+      border-radius: 6px;
+      background: var(--accent-pale);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-align: center;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .sv-project-img img { width: 100%; height: 100%; object-fit: cover; }
+    .sv-project-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+    .sv-project-stack {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .sv-project-desc {
+      font-size: 0.82rem;
+      color: var(--ink-light);
+      line-height: 1.5;
+    }
+    .sv-project-link {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 0.4rem;
+      display: inline-block;
+    }
+
+    /* Education */
+    .sv-edu-item { margin-bottom: 0.8rem; }
+    .sv-edu-item:last-child { margin-bottom: 0; }
+    .sv-edu-header {
+      display: flex; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.3rem;
+      margin-bottom: 0.1rem;
+    }
+    .sv-edu-degree {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+    .sv-edu-date { font-size: 0.78rem; color: var(--ink-muted); }
+    .sv-edu-school { font-size: 0.82rem; color: var(--ink-light); }
+
+    /* Skills & Additional */
+    .sv-skills-row {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-bottom: 0.6rem;
+    }
+    .sv-skill-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      width: 100%;
+      margin-bottom: 0.2rem;
+    }
+    .sv-pill {
+      font-size: 0.78rem;
+      background: var(--accent-pale);
+      color: var(--accent);
+      padding: 0.2rem 0.7rem;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+    .sv-additional-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem 2rem;
+      font-size: 0.85rem;
+    }
+    .sv-additional-item { color: var(--ink-light); }
+    .sv-additional-item strong { color: var(--ink); font-weight: 600; }
+
+    .btn-simple-view {
+      background: var(--ink);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.45rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-simple-view:hover { background: #333; }
+
+    @media (max-width: 600px) {
+      .sv-header { grid-template-columns: 1fr; }
+      .sv-photo-placeholder { display: none; }
+      .sv-project { grid-template-columns: 1fr; }
+      .sv-project-img { display: none; }
+      .sv-additional-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── Responsive ─────────────────────────────────── */
+    @media (max-width: 700px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-photo-placeholder { display: none; }
+      #about .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .projects-2col { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .timeline-item::before { display: none; }
+      .timeline-dot { display: none; }
+      .timeline-date { text-align: left; }
+      .timeline-content { padding-left: 0; }
+      .nav-links { gap: 1.2rem; }
+      .hero-stats { gap: 1.2rem; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Coming soon...</h1>
+
+  <!-- ─── Nav ─────────────────────────────────────────── -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo">AG</div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <button class="btn-simple-view" onclick="openSimpleView()">Quick View ↗</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── Hero ─────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-tag">Available for junior roles · Remote</div>
+        <h1 class="hero-title">Antoni<br><em>Gruba</em></h1>
+        <p class="hero-sub">Mobile & Data Engineer. I build apps that ship and pipelines that think. Final semester CS student at University of London.</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Years professional experience</div>
+          </div>
+          <div>
+            <div class="stat-num">1</div>
+            <div class="stat-label">App on Google Play Store</div>
+          </div>
+          <div>
+            <div class="stat-num">82%</div>
+            <div class="stat-label">BSc average grade</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-photo-placeholder">👤</div>
+      <!-- Replace the above div with:
+      <img src="your-photo.jpg" alt="Antoni Gruba" class="hero-photo" />
+      -->
+    </div>
+  </section>
+
+  <!-- ─── About ─────────────────────────────────────────── -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-tag">About</div>
+        <h2>Who I am</h2>
+      </div>
+      <div class="about-grid fade-in">
+        <div class="about-text">
+          <p>I'm a Computer Science BSc student in my final semester at the University of London (Goldsmiths), currently based between Sosnowiec, Poland and Bangkok, Thailand.</p>
+          <p>My work sits at the intersection of mobile development and data engineering. I've built and shipped a native Android climbing gym discovery app to the Google Play Store, and I complement that with practical data science skills — Python pipelines, SQL analytics, and hands-on AI/NLP projects.</p>
+          <p>I've worked professionally as a Virtual Operations Manager, building sales dashboards and automating workflows with Python, and as a Top Rated Plus freelance translator on Upwork with a 100% job success rate. I enjoy building things that are useful and shipping them into the world.</p>
+          <p>Outside of tech: rock climbing, filmmaking, photography, and learning languages.</p>
+        </div>
+        <div class="about-facts">
+          <div class="fact-item">
+            <div class="fact-icon">🎓</div>
+            <div>
+              <div class="fact-label">Education</div>
+              <div class="fact-value">BSc Computer Science, University of London (Goldsmiths) — Final Semester</div>
+            </div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-icon">📍</div>
+            <div>
+              <div class="fact-label">Location</div>
+              <div class="fact-value">Sosnowiec, Poland · Bangkok, Thailand · Remote-only</div>
+            </div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-icon">🗣️</div>
+            <div>
+              <div class="fact-label">Languages</div>
+              <div class="fact-value">Polish (Native) · English (C2) · Spanish (B1)</div>
+            </div>
+          </div>
+          <div class="fact-item">
+            <div class="fact-icon">📄</div>
+            <div>
+              <div class="fact-label">Looking for</div>
+              <div class="fact-value">Junior Mobile Engineer or Data Engineer roles · Remote</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Projects ──────────────────────────────────────── -->
+  <section id="projects" style="background: var(--cream);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-tag">Work</div>
+        <h2>Projects</h2>
+      </div>
+
+      <div class="projects-grid fade-in">
+
+        <!-- Featured: Climbing App -->
+        <div class="project-card featured">
+          <div class="project-img-placeholder">
+            📸 Screenshot coming soon
+            <!-- Replace with: <img src="climbing-app-screenshot.png" alt="Climbing Gym Discovery App" /> -->
+          </div>
+          <div class="project-body">
+            <div class="project-badge">📱 Mobile · Published</div>
+            <h3>Climbing Gym Discovery App</h3>
+            <p>A native Android app for discovering and exploring climbing gyms. Built with a React Native frontend and a Next.js backend. Published on the Google Play Store.</p>
+            <div class="project-tags">
+              <span class="tag">React Native</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Next.js</span>
+              <span class="tag">Android</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">▶ Google Play Store</a>
+              <a href="#" class="project-link secondary">⌥ GitHub (private — request access)</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 col grid for remaining projects -->
+        <div class="projects-2col" style="grid-column: 1/-1;">
+
+          <!-- Event Management App -->
+          <div class="project-card">
+            <div class="project-img-placeholder" style="height: 140px;">
+              📸 Screenshot coming soon
+            </div>
+            <div class="project-body">
+              <div class="project-badge">🌐 Full-Stack</div>
+              <h3>Event Management Web App</h3>
+              <p>Full-stack event booking platform with dual user roles. Organisers create, edit and publish events. Attendees browse and book tickets with tiered pricing and real-time inventory tracking.</p>
+              <div class="project-tags">
+                <span class="tag">Next.js</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">SQL</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link secondary">⌥ GitHub (private — request access)</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evolutionary Algorithm -->
+          <div class="project-card">
+            <div class="project-img-placeholder" style="height: 140px;">
+              📸 Screenshot coming soon
+            </div>
+            <div class="project-body">
+              <div class="project-badge">🧬 AI · University</div>
+              <h3>Evolutionary Algorithm: Creatures Climbing Sim</h3>
+              <p>AI creatures evolving to climb a mountain through genetic algorithms. Designed 10+ fitness function variants and optimised hyperparameters across multiple training runs. Graded with distinction.</p>
+              <div class="project-tags">
+                <span class="tag">Python</span>
+                <span class="tag">NumPy</span>
+                <span class="tag">Genetic Algorithms</span>
+                <span class="tag">Physics Simulation</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link secondary">⌥ GitHub (private — request access)</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Experience ────────────────────────────────────── -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-tag">Career</div>
+        <h2>Experience</h2>
+      </div>
+      <div class="timeline fade-in">
+
+        <div class="timeline-item">
+          <div class="timeline-date">Mar – Sept 2025</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-company">Balloon Dude</div>
+            <div class="timeline-role">Virtual Operations Manager</div>
+            <div class="timeline-desc">Built sales analytics dashboards using Python (pandas) and Excel. Automated repetitive workflows, delivered data-driven recommendations on stock and scheduling, and contributed to UX audits and website optimisation.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Aug 2024 – Present</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-company">Upwork · Freelance</div>
+            <div class="timeline-role">Polish-English Translator & Localisation Specialist</div>
+            <div class="timeline-desc">Top Rated Plus freelancer with 100% job success rate. Managed high-volume projects including a 7-month ongoing contract. Specialised in e-commerce localisation (2,000+ product descriptions), technical documentation, and legal content.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Dec 2022 – Jan 2024</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-company">mBank S.A.</div>
+            <div class="timeline-role">Settlement Operations Analyst</div>
+            <div class="timeline-desc">Validated transaction accuracy across banking and ATM systems during year-end reconciliations. Identified and escalated discrepancies in high-volume settlement data under tight seasonal deadlines.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Skills ────────────────────────────────────────── -->
+  <section id="skills" style="background: var(--white);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-tag">Technical</div>
+        <h2>Skills</h2>
+      </div>
+      <div class="skills-grid fade-in">
+        <div class="skill-group">
+          <div class="skill-group-title">Mobile</div>
+          <div class="skill-pills">
+            <span class="skill-pill">React Native</span>
+            <span class="skill-pill">JavaScript</span>
+            <span class="skill-pill">Android Studio</span>
+            <span class="skill-pill">Google Play Store</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Backend & Web</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Next.js</span>
+            <span class="skill-pill">Node.js</span>
+            <span class="skill-pill">SQL</span>
+            <span class="skill-pill">HTML</span>
+            <span class="skill-pill">CSS</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Data & AI</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">pandas</span>
+            <span class="skill-pill">NumPy</span>
+            <span class="skill-pill">scikit-learn</span>
+            <span class="skill-pill">Jupyter</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Other Languages</div>
+          <div class="skill-pills">
+            <span class="skill-pill">C++</span>
+            <span class="skill-pill">C#</span>
+            <span class="skill-pill">Unity</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Tools</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Git / GitHub</span>
+            <span class="skill-pill">Excel</span>
+            <span class="skill-pill">Power BI</span>
+            <span class="skill-pill">Canva</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Certifications</div>
+          <div class="skill-pills">
+            <span class="skill-pill">IBM Python for Data Science</span>
+            <span class="skill-pill">IBM AI Engineering</span>
+            <span class="skill-pill">Google IT Support</span>
+            <span class="skill-pill">IELTS C2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Contact ───────────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-tag">Say Hello</div>
+        <h2>Get in touch</h2>
+      </div>
+      <div class="contact-grid fade-in">
+        <div>
+          <p style="margin-bottom: 0.5rem;">I'm currently looking for junior Mobile Engineer or Data Engineer roles — remote only. If you have an opportunity, a project, or just want to chat, feel free to reach out.</p>
+          <p>I typically respond within 24 hours.</p>
+          <div class="contact-links">
+            <a href="mailto:antekdwa@gmail.com" class="contact-link-item">
+              <div class="contact-link-icon">✉️</div>
+              <div>
+                <div class="contact-link-label">Email</div>
+                <div class="contact-link-value">antekdwa@gmail.com</div>
+              </div>
+            </a>
+            <a href="https://linkedin.com/in/antoni-gruba" target="_blank" class="contact-link-item">
+              <div class="contact-link-icon">💼</div>
+              <div>
+                <div class="contact-link-label">LinkedIn</div>
+                <div class="contact-link-value">linkedin.com/in/antoni-gruba</div>
+              </div>
+            </a>
+            <a href="https://github.com/ubantpy" target="_blank" class="contact-link-item">
+              <div class="contact-link-icon">🐙</div>
+              <div>
+                <div class="contact-link-label">GitHub</div>
+                <div class="contact-link-value">github.com/ubantpy</div>
+              </div>
+            </a>
+            <a href="https://www.upwork.com/freelancers/~01b35fd5e87f78c8f3" target="_blank" class="contact-link-item">
+              <div class="contact-link-icon">⭐</div>
+              <div>
+                <div class="contact-link-label">Upwork</div>
+                <div class="contact-link-value">Top Rated Plus · 100% JSS</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <form name="contact" netlify onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Hi Antoni, I'd like to chat about..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary form-submit">Send Message →</button>
+          <p id="form-success" style="display:none; color: var(--accent); font-size: 0.9rem; margin-top: 0.8rem; font-weight: 500;">✓ Message sent! I'll get back to you soon.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ───────────────────────────────────────── -->
+  <footer>
+    <p>© 2026 <span>Antoni Gruba</span> · Built with HTML, CSS & JS · Hosted on GitHub Pages</p>
+  </footer>
+
+  <!-- ─── Simple View Panel ────────────────────────────── -->
+  <div id="simple-view">
+    <button class="sv-close" onclick="closeSimpleView()">✕ Close Quick View</button>
+    <div class="sv-inner">
+
+      <!-- Header -->
+      <div class="sv-header">
+        <div>
+          <div class="sv-name">Antoni Gruba</div>
+          <div class="sv-title">Mobile & Data Engineer · Computer Science BSc (Final Semester)</div>
+          <div class="sv-contact-line">
+            <a href="mailto:antekdwa@gmail.com">antekdwa@gmail.com</a>
+            <span>+48 500 839 396</span>
+            <a href="https://antonigruba.work">antonigruba.work</a>
+            <a href="https://github.com/ubantpy">github.com/ubantpy</a>
+            <a href="https://linkedin.com/in/antoni-gruba">linkedin.com/in/antoni-gruba</a>
+            <span>Sosnowiec, Poland · Bangkok, Thailand · Remote</span>
+          </div>
+        </div>
+        <div class="sv-photo-placeholder">
+          👤
+          <!-- Replace with: <img src="your-photo.jpg" style="width:90px;height:90px;border-radius:50%;object-fit:cover;" /> -->
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="sv-section">
+        <div class="sv-section-title">Summary</div>
+        <div class="sv-summary">Computer Science BSc student (final semester, University of London) with production-ready mobile development experience. Built and shipped a native climbing gym discovery app for Android. Complemented by practical data science expertise: Python/pandas data pipelines, SQL analytics, and NLP/AI project completion. Proven ability to bridge full-stack development with data-driven decision-making. Seeking a Mobile Engineer or Data Engineer role where I can build scalable, intelligent applications.</div>
+      </div>
+
+      <!-- Work Experience -->
+      <div class="sv-section">
+        <div class="sv-section-title">Work Experience</div>
+
+        <div class="sv-job">
+          <div class="sv-job-header">
+            <div class="sv-job-title">Virtual Operations Manager</div>
+            <div class="sv-job-date">Mar 2025 – Sept 2025</div>
+          </div>
+          <div class="sv-job-company">Balloon Dude</div>
+          <ul>
+            <li>Leveraged Python (pandas) and Excel to build sales analytics dashboards and identify SKU performance trends.</li>
+            <li>Automated repetitive workflows using scripts (content metadata processing, reporting).</li>
+            <li>Delivered actionable recommendations on seasonality, stock levels, and scheduling.</li>
+            <li>Contributed to product improvements, UX audits, and website optimisation.</li>
+          </ul>
+        </div>
+
+        <div class="sv-job">
+          <div class="sv-job-header">
+            <div class="sv-job-title">Polish-English Translator & Proofreading Specialist</div>
+            <div class="sv-job-date">Aug 2024 – Present</div>
+          </div>
+          <div class="sv-job-company">Upwork · Freelance</div>
+          <ul>
+            <li>Top Rated Plus freelancer with 100% job success rate.</li>
+            <li>Managed high-volume translation projects, including a 7-month ongoing contract with a single client.</li>
+            <li>Specialised in e-commerce localisation (2,000+ product descriptions), technical documentation, and legal content.</li>
+          </ul>
+        </div>
+
+        <div class="sv-job">
+          <div class="sv-job-header">
+            <div class="sv-job-title">Settlement Operations Analyst</div>
+            <div class="sv-job-date">Dec 2022 – Jan 2023, Dec 2023 – Jan 2024</div>
+          </div>
+          <div class="sv-job-company">mBank S.A.</div>
+          <ul>
+            <li>Validated transaction accuracy across banking and ATM systems during year-end reconciliations.</li>
+            <li>Identified and escalated discrepancies in high-volume settlement data.</li>
+            <li>Supported critical year-end close processes under tight deadlines.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="sv-section">
+        <div class="sv-section-title">Projects</div>
+        <div class="sv-projects">
+
+          <div class="sv-project">
+            <div>
+              <div class="sv-project-name">Climbing Gym Discovery App</div>
+              <div class="sv-project-stack">React Native · JavaScript · Next.js</div>
+              <div class="sv-project-desc">Native Android app for discovering and exploring climbing gyms. Published on the Google Play Store.</div>
+              <a href="#" class="sv-project-link">▶ Google Play Store ↗</a>
+            </div>
+            <div class="sv-project-img">
+              📸 Screenshot<br>coming soon
+              <!-- Replace with: <img src="climbing-app.png" alt="Climbing App" /> -->
+            </div>
+          </div>
+
+          <div class="sv-project">
+            <div>
+              <div class="sv-project-name">Event Management Web App</div>
+              <div class="sv-project-stack">Next.js · Node.js · JavaScript · SQL</div>
+              <div class="sv-project-desc">Full-stack booking platform. Organisers create, edit, publish events. Attendees browse and book with real-time inventory and tiered pricing.</div>
+              <a href="#" class="sv-project-link">⌥ GitHub (private — request access) ↗</a>
+            </div>
+            <div class="sv-project-img">
+              📸 Screenshot<br>coming soon
+            </div>
+          </div>
+
+          <div class="sv-project">
+            <div>
+              <div class="sv-project-name">Evolutionary Algorithm: Creatures Climbing Sim</div>
+              <div class="sv-project-stack">Python · NumPy · Genetic Algorithms</div>
+              <div class="sv-project-desc">AI creatures evolving to climb mountains through genetic algorithms. Designed 10+ fitness function variants, optimised hyperparameters. Graded with distinction.</div>
+              <a href="#" class="sv-project-link">⌥ GitHub (private — request access) ↗</a>
+            </div>
+            <div class="sv-project-img">
+              📸 Screenshot<br>coming soon
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="sv-section">
+        <div class="sv-section-title">Education</div>
+        <div class="sv-edu-item">
+          <div class="sv-edu-header">
+            <div class="sv-edu-degree">Bachelor of Science in Computer Science (Avg. grade: 82%)</div>
+            <div class="sv-edu-date">Sept 2023 – Present</div>
+          </div>
+          <div class="sv-edu-school">University of London, Goldsmiths, UK</div>
+        </div>
+        <div class="sv-edu-item">
+          <div class="sv-edu-header">
+            <div class="sv-edu-degree">High School with Extended Mathematics, Physics & Informatics</div>
+            <div class="sv-edu-date">2019 – 2022</div>
+          </div>
+          <div class="sv-edu-school">IX Liceum Ogólnokształcące in Sosnowiec, Poland</div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="sv-section">
+        <div class="sv-section-title">Technical Skills</div>
+        <div style="display:flex; flex-direction:column; gap: 0.7rem;">
+          <div>
+            <div class="sv-skill-label">Mobile</div>
+            <div class="sv-skills-row">
+              <span class="sv-pill">React Native</span>
+              <span class="sv-pill">JavaScript</span>
+              <span class="sv-pill">Android Studio</span>
+            </div>
+          </div>
+          <div>
+            <div class="sv-skill-label">Backend & Web</div>
+            <div class="sv-skills-row">
+              <span class="sv-pill">Next.js</span>
+              <span class="sv-pill">Node.js</span>
+              <span class="sv-pill">SQL</span>
+              <span class="sv-pill">HTML</span>
+              <span class="sv-pill">CSS</span>
+            </div>
+          </div>
+          <div>
+            <div class="sv-skill-label">Data & AI</div>
+            <div class="sv-skills-row">
+              <span class="sv-pill">Python</span>
+              <span class="sv-pill">pandas</span>
+              <span class="sv-pill">NumPy</span>
+              <span class="sv-pill">scikit-learn</span>
+              <span class="sv-pill">Jupyter</span>
+            </div>
+          </div>
+          <div>
+            <div class="sv-skill-label">Other</div>
+            <div class="sv-skills-row">
+              <span class="sv-pill">Git / GitHub</span>
+              <span class="sv-pill">Excel</span>
+              <span class="sv-pill">C++</span>
+              <span class="sv-pill">C#</span>
+              <span class="sv-pill">Unity</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional -->
+      <div class="sv-section">
+        <div class="sv-section-title">Additional Information</div>
+        <div class="sv-additional-grid">
+          <div class="sv-additional-item"><strong>Languages:</strong> English (C2), Polish (Native), Spanish (B1)</div>
+          <div class="sv-additional-item"><strong>Certifications:</strong> IBM Python for Data Science, IBM AI Engineering & Data Science, Google IT Support, IELTS</div>
+          <div class="sv-additional-item"><strong>Interests:</strong> Rock climbing, filmmaking, photography, languages, travel</div>
+          <div class="sv-additional-item"><strong>Volunteering:</strong> Great Orchestra of Christmas Charity (2019–2021), Workaway (07–11.2022)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── JS ───────────────────────────────────────────── -->
+  <script>
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Form submit
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const success = document.getElementById('form-success');
+      success.style.display = 'block';
+      form.reset();
+      setTimeout(() => success.style.display = 'none', 5000);
+    }
+
+    // Simple view toggle
+    function openSimpleView() {
+      document.getElementById('simple-view').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSimpleView() {
+      document.getElementById('simple-view').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    // Close on Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeSimpleView();
+    });
+  </script>
+
 </body>
 </html>
