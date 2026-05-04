@@ -709,7 +709,7 @@ footer span { color: rgba(255,255,255,0.8); }
 @media (max-width: 700px) {
   .mobile-simple-view-btn { display: block; }
   .btn-simple-view { display: none; }
-  .nav-links { gap: 0.8rem; }
+  .nav-links { gap: 0.6rem; }
 }
 
 @media (max-width: 600px) {
@@ -718,6 +718,9 @@ footer span { color: rgba(255,255,255,0.8); }
     .sv-project { grid-template-columns: 1fr; }
     .sv-project-img { display: none; }
     .sv-additional-grid { grid-template-columns: 1fr; }
+
+    .nav-links a { font-size: 0.7rem; }
+    .nav-logo { font-size: 1rem; }
 }
 
 /* ─── Responsive ─────────────────────────────────── */
