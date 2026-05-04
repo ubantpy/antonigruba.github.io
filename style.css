@@ -686,6 +686,31 @@ footer span { color: rgba(255,255,255,0.8); }
     white-space: nowrap;
 }
 .btn-simple-view:hover { background: #333; }
+.mobile-simple-view-btn {
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+  background: var(--ink);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .mobile-simple-view-btn { display: block; }
+  .btn-simple-view { display: none; }
+  .nav-links { gap: 0.8rem; }
+}
 
 @media (max-width: 600px) {
     .sv-header { grid-template-columns: 1fr; }
