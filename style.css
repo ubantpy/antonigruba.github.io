@@ -568,6 +568,7 @@ footer span { color: rgba(255,255,255,0.8); }
 .sv-projects { display: flex; flex-direction: column; gap: 1.2rem; }
 .sv-project {
     display: grid;
+    overflow: visible;
     grid-template-columns: 1fr auto;
     gap: 1rem;
     align-items: start;
@@ -587,6 +588,16 @@ footer span { color: rgba(255,255,255,0.8); }
     border: 1px solid var(--border);
     flex-shrink: 0;
     overflow: hidden;
+
+    cursor: zoom-in;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+.sv-project-img:hover {
+  transform: scale(3.5);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  z-index: 100;
 }
 .sv-project-img img { width: 100%; height: 100%; object-fit: cover; }
 .sv-project-name {
