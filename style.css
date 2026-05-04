@@ -206,6 +206,20 @@ nav {
     font-weight: 500;
     border-bottom: 1px solid var(--border);
 }
+.project-img-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.project-img-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(to top, #f7f4ef, transparent);
+  pointer-events: none;
+}
 .project-body { padding: 1.5rem; }
 .project-badge {
     display: inline-block;
