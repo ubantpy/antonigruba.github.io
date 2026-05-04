@@ -9,6 +9,20 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+// Pre-fill contact form from URL
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (hash.includes('project=')) {
+    const project = decodeURIComponent(hash.split('project=')[1]);
+    const textarea = document.getElementById('message');
+    if (textarea) {
+      textarea.value = `Hi Antoni,\n\nI'd like to request access to your ${project} project.\n\n`;
+      // Scroll to contact section
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+});
+
 // Form submit
 function handleSubmit(e) {
     e.preventDefault();
