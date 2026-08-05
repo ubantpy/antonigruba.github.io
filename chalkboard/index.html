@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chalkboard - Find Climbing Gyms</title>
+  <meta name="description" content="Discover climbing gyms wherever you are. Map-based search, gym profiles, and personal lists - free on Android.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a class="nav-back" href="https://antonigruba.work">← antonigruba.work</a>
+    <span class="nav-wordmark">CHALKBOARD</span>
+  </nav>
+
+
+  <!--  HERO  -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Android · Free</p>
+      <h1 class="hero-title">
+        FIND YOUR<br>
+        <span class="coral">NEXT CLIMB</span>
+      </h1>
+      <p class="hero-sub">
+        Discover climbing gyms wherever you are - near home, or in a city you've never been to. Search the map, read what climbers say, save the ones worth returning to.
+      </p>
+      <a class="play-btn"
+         href="https://play.google.com/store/apps/details?id=com.antek.chalkboard"
+         target="_blank" rel="noopener noreferrer">
+        <!-- Google Play icon -->
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M3.18 23.76c.3.17.65.19.97.07L17.22 16.27l-2.97-2.98L3.18 23.76zm-1.43-1.42V1.66c0-.36.17-.68.45-.86L13.8 12 2.2 23.2a1 1 0 0 1-.45-.86zM22.1 10.6l-2.82-1.63-3.27 3.03 3.27 3.04 2.85-1.65a1.45 1.45 0 0 0 0-2.79zM4.15.17l13.07 7.56-2.97 2.97L4.15.17z"/>
+        </svg>
+        Get it on Google Play
+      </a>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+            <img src="./images/home-map.jpg" alt="Map screen showing climbing gyms">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="chalk">
+
+
+  <!--  FEATURES  -->
+  <section class="features">
+
+    <!-- Feature 1: Top gyms ranking -->
+    <div class="feature feature--flip reveal">
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-screen">
+              <img src="./images/top-gyms.jpg" alt="Top gyms ranking screen">
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="feature-label">Rankings</span>
+        <h2 class="feature-heading">THE BEST<br>GYMS NEARBY</h2>
+        <p class="feature-body">
+          Gyms are ranked by a score that factors in both their rating and how many people reviewed them - so a 4.9 from twelve visitors ranks lower than a 4.7 from three hundred. Adjust the search radius from 1 to 25 km and the list updates instantly.
+        </p>
+      </div>
+    </div>
+
+    <!-- Feature 2: Gym profiles -->
+    <div class="feature reveal">
+      <div>
+        <span class="feature-label">Profiles</span>
+        <h2 class="feature-heading">EVERYTHING<br>BEFORE YOU GO</h2>
+        <p class="feature-body">
+          Each gym profile shows opening hours, address, ratings, user reviews, and a direct link to Google Maps for directions. If the gym has a website, that's there too. No searching around - it's all in one place.
+        </p>
+      </div>
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-screen">
+              <img src="./images/gym-profile.jpg" alt="Gym profile screen">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two small features -->
+    <div class="small-pair reveal">
+
+      <div class="small-card">
+        <div class="small-icon">
+          <!-- Bookmark icon -->
+          <svg viewBox="0 0 24 24">
+            <path d="M19 21 12 16 5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>
+          </svg>
+        </div>
+        <p class="small-card-title">Save and track</p>
+        <p class="small-card-body">
+          Mark any gym as a favourite, visited, or somewhere you want to go. Your lists are stored on your device - nothing synced, nothing shared.
+        </p>
+      </div>
+
+      <div class="small-card">
+        <div class="small-icon">
+          <!-- Shield / privacy icon -->
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2 3 7v5c0 5.25 3.75 10.15 9 11.25C18.25 22.15 22 17.25 22 12V7l-9-5z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <p class="small-card-title">No account needed</p>
+        <p class="small-card-body">
+          Everything lives on your phone. No sign-up, no email, no password. Open it, find a gym, go climb.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!--  ABOUT THE DEVELOPER  -->
+  <div class="about-wrap">
+    <div class="about reveal">
+
+      <div class="about-photo">
+          <img src="./images/dev.png" alt="Antoni Gruba photo">
+      </div>
+
+      <div>
+        <p class="eyebrow">The developer</p>
+        <h2 class="about-name">ANTONI GRUBA</h2>
+        <p class="about-body">
+          I'm a computer science student at the University of London, building for mobile. Chalkboard started as a university project - and since I climb, it turned into something I actually use when travelling to new cities. More of my work is on this site.
+        </p>
+        <div class="about-links">
+          <a class="about-link" href="https://github.com/ubantpy" target="_blank" rel="noopener">GitHub</a>
+          <a class="about-link" href="https://antonigruba.work">Portfolio</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!--  QUICK FACTS STRIP  -->
+  <div class="strip">
+    <div class="strip-item">
+      <div class="strip-dot"></div>
+      <span class="strip-text">Free to download</span>
+    </div>
+    <div class="strip-item">
+      <div class="strip-dot"></div>
+      <span class="strip-text">No account or sign-up</span>
+    </div>
+    <div class="strip-item">
+      <div class="strip-dot"></div>
+      <span class="strip-text">Android · Google Play</span>
+    </div>
+    <div class="strip-item">
+      <div class="strip-dot"></div>
+      <span class="strip-text">Works worldwide</span>
+    </div>
+  </div>
+
+
+  <!-- ─Footer -->
+  <footer>
+    <p>© 2026 Antoni Gruba</p>
+    <a href="/chalkboard/privacy-policy">Privacy Policy</a>
+  </footer>
+
+
+  <script>
+    // Scroll reveal
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
