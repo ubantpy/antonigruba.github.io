@@ -259,15 +259,23 @@
       gap: 4px;
       text-align: center;
     }
-    .day img { width: 100%; max-width: 30px; margin: 0 auto 4px; }
-    .day .empty {
+    /* Each day is a squircle tinted with its mood colour, with the character inside, like the app */
+    .day .blob {
       width: 100%;
-      max-width: 30px;
-      aspect-ratio: 1.1;
+      max-width: 36px;
+      aspect-ratio: 1;
       margin: 0 auto 4px;
-      border: 1.5px dashed var(--accent);
-      border-radius: 12px;
+      border-radius: 28%;
+      display: grid;
+      place-items: center;
     }
+    .day .blob img { width: 83%; }
+    .blob.great    { background: rgba(62, 155, 120, 0.13); }
+    .blob.good     { background: rgba(92, 153, 133, 0.13); }
+    .blob.neutral  { background: rgba(124, 151, 145, 0.13); }
+    .blob.low      { background: rgba(140, 145, 141, 0.13); }
+    .blob.very-low { background: rgba(149, 131, 131, 0.13); }
+    .blob.today    { border: 2px solid var(--accent); }
     .day small { font-size: 0.6rem; color: var(--muted); }
 
     .screen-btn {
@@ -469,7 +477,7 @@
       background: var(--good);
     }
     .bar { height: 4px; background: var(--surface2); border-radius: 2px; margin-top: 8px; overflow: hidden; }
-    .bar i { display: block; height: 100%; width: 58%; background: var(--accent); border-radius: 2px; }
+    .bar i { display: block; height: 100%; width: 87%; background: var(--accent); border-radius: 2px; }
 
     .goal-options { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
     .goal-option {
@@ -710,13 +718,13 @@
           <div>
             <p class="mini-label">Recent days</p>
             <div class="days">
-              <div class="day"><img src="images/mood-good.webp" alt=""><small>Fri</small></div>
-              <div class="day"><img src="images/mood-great.webp" alt=""><small>Sat</small></div>
-              <div class="day"><img src="images/mood-neutral.webp" alt=""><small>Sun</small></div>
-              <div class="day"><img src="images/mood-low.webp" alt=""><small>Mon</small></div>
-              <div class="day"><img src="images/mood-good.webp" alt=""><small>Tue</small></div>
-              <div class="day"><img src="images/mood-great.webp" alt=""><small>Wed</small></div>
-              <div class="day"><div class="empty"></div><small>Today</small></div>
+              <div class="day"><div class="blob good"><img src="images/mood-good.webp" alt=""></div><small>Fri</small></div>
+              <div class="day"><div class="blob great"><img src="images/mood-great.webp" alt=""></div><small>Sat</small></div>
+              <div class="day"><div class="blob neutral"><img src="images/mood-neutral.webp" alt=""></div><small>Sun</small></div>
+              <div class="day"><div class="blob low"><img src="images/mood-low.webp" alt=""></div><small>Mon</small></div>
+              <div class="day"><div class="blob good"><img src="images/mood-good.webp" alt=""></div><small>Tue</small></div>
+              <div class="day"><div class="blob great"><img src="images/mood-great.webp" alt=""></div><small>Wed</small></div>
+              <div class="day"><div class="blob today"></div><small>Today</small></div>
             </div>
           </div>
 
@@ -843,7 +851,7 @@
               </div>
               <div class="pattern-card">
                 <p class="pattern-title">Consistency</p>
-                <p class="pattern-value">18 <span>/ 31</span></p>
+                <p class="pattern-value">13 <span>/ 15</span></p>
                 <p class="pattern-sub">days journaled this month</p>
                 <div class="bar"><i></i></div>
               </div>
