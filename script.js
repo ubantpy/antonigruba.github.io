@@ -33,7 +33,8 @@ function handleProjectLink() {
     return;
   }
   if (hash.includes('project=')) {
-    const project = decodeURIComponent(hash.split('project=')[1]);
+    // Links write spaces as "+", which decodeURIComponent leaves alone
+    const project = decodeURIComponent(hash.split('project=')[1].replace(/\+/g, ' '));
     const textarea = document.getElementById('message');
     if (textarea) {
       textarea.value = `Hi Antoni,\nI'd like to request access to your ${project} project.\n\nA bit about me:\n- Name: \n- Role / company: \n- Why I'm interested in this project: `;
