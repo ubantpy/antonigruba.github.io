@@ -12,6 +12,26 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 // Pre-fill contact form from URL
 function handleProjectLink() {
   const hash = window.location.hash;
+  // Request to test an app before it launches, e.g. #contact?test=echoes from the Echoes site
+  if (hash.includes('test=echoes')) {
+    const textarea = document.getElementById('message');
+    if (textarea) {
+      textarea.value = `Hi Antoni,\nI'd like to test Echoes before it launches.\n\n- My phone (Android or iPhone): \n- Why I'd like to test it: \n- Do I keep a journal now? (never / sometimes / most days): \n- Google Play or Apple account email for the invite, if different from the one above: `;
+      // Grow the box so every question shows without scrolling inside it,
+      // and again once the web fonts have loaded, as they change the text's height
+      const fit = () => {
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight + textarea.offsetHeight - textarea.clientHeight) + 'px';
+      };
+      fit();
+      if (document.fonts) document.fonts.ready.then(fit);
+      closeSimpleView();
+      setTimeout(() => {
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+    return;
+  }
   if (hash.includes('project=')) {
     const project = decodeURIComponent(hash.split('project=')[1]);
     const textarea = document.getElementById('message');
