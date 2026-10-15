@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Echoes Privacy Policy</title>
+  <meta name="description" content="How the Echoes journaling app handles your journal entries, voice recordings and other information.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #1C201E;
+      --surface:   #262B28;
+      --surface2:  #2e3530;
+      --accent:    #3E9B78;
+      --text:      #F2F4F3;
+      --muted:     #9CA6A1;
+      --radius-card: 20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--surface2);
+    }
+
+    .nav-back {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    .nav-wordmark {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .privacy {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    .privacy h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .date {
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    .summary {
+      background: var(--surface);
+      border: 1px solid var(--surface2);
+      border-radius: var(--radius-card);
+      padding: 24px 28px;
+      margin-bottom: 48px;
+    }
+
+    .summary h2 { margin-bottom: 12px; }
+
+    section { margin-bottom: 40px; }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    p, li { color: var(--muted); }
+
+    p { margin-bottom: 14px; }
+
+    ul {
+      margin: 0 0 14px 1.3rem;
+    }
+
+    li { margin-bottom: 8px; }
+
+    strong { color: var(--text); font-weight: 600; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 16px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    @media (max-width: 820px) {
+      nav { padding: 16px 20px; }
+      .privacy { padding: 48px 16px 64px; }
+      .summary { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-back" href="/echoes">← Echoes</a>
+    <span class="nav-wordmark">ECHOES</span>
+  </nav>
+
+  <main class="privacy">
+
+    <h1>Echoes Privacy Policy</h1>
+    <p class="date">Effective date: 15 October 2026</p>
+
+    <div class="summary">
+      <h2>The short version</h2>
+      <ul>
+        <li>Your journal is stored on your phone. There is no account and no sign-up.</li>
+        <li>To turn your voice into text, work out the mood of an entry and write weekly and monthly summaries, Echoes sends your recordings and entry text to AI services for processing. The developer does not keep a copy.</li>
+        <li>Echoes has no ads, no analytics and no tracking, and your information is never sold.</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2>Who is responsible</h2>
+      <p>
+        Echoes is developed by Antoni Gruba, an independent developer. If you have any questions about this policy
+        or your information, contact <a href="mailto:antonigruba.dev@gmail.com">antonigruba.dev@gmail.com</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Information stored on your device</h2>
+      <p>Everything you create in Echoes is stored locally on your phone, in the app's private storage:</p>
+      <ul>
+        <li>Your journal entries, quick notes and drafts.</li>
+        <li>The mood worked out for each entry, and your weekly and monthly summaries.</li>
+        <li>Your settings, such as the name you choose to enter, your reminder time, your goals and when your day ends.</li>
+        <li>Voice recordings, which are kept temporarily in the app's private storage after they have been turned into text.</li>
+      </ul>
+      <p>
+        This information stays on your device unless you choose to export a backup. Deleting an entry removes it from
+        your journal, and uninstalling the app deletes everything Echoes has stored on that device. Your phone's own
+        backup service (for example Google's or Apple's device backup) may include the app's data, depending on your
+        phone's settings.
+      </p>
+    </section>
+
+    <section>
+      <h2>Information sent for processing</h2>
+      <p>Some features need an internet connection. When you use them, Echoes sends the following through the developer's server:</p>
+      <ul>
+        <li><strong>Voice recordings</strong>, to OpenAI, to turn your speech into text.</li>
+        <li><strong>The text of an entry</strong>, to Hugging Face, to work out the mood of the entry.</li>
+        <li><strong>The text of your entries for a week or month</strong>, to OpenAI, to write a short summary of that period.</li>
+      </ul>
+      <p>
+        The developer's server only passes these requests on and returns the result to your phone. It does not store
+        your recordings or entries. The hosting provider (Vercel) may keep standard technical logs, such as the time of
+        a request and your IP address, for a short period to keep the service running and secure.
+      </p>
+      <p>
+        OpenAI and Hugging Face process this information to return the result, under their own privacy policies.
+        OpenAI states that it does not use data sent through its API to train its models by default, and that it may
+        keep it for up to 30 days to monitor for abuse.
+      </p>
+      <p>
+        Your journal entries may include personal or sensitive information, including information about your health
+        or feelings. Only use the voice, mood and summary features if you are comfortable with this processing.
+        You can always write typed entries and use the rest of the app without recording.
+      </p>
+    </section>
+
+    <section>
+      <h2>Permissions</h2>
+      <ul>
+        <li><strong>Microphone</strong>: only to record voice entries when you choose to. If you don't allow it, you can still write typed entries.</li>
+        <li><strong>Files</strong>: only when you choose to export or import a backup.</li>
+      </ul>
+      <p>You can change these permissions at any time in your device settings.</p>
+    </section>
+
+    <section>
+      <h2>Backups</h2>
+      <p>
+        You can export a backup file of your journal and settings, and import it again later. The backup file is saved
+        wherever you choose, and you are responsible for keeping it safe. Echoes does not upload backups anywhere.
+      </p>
+    </section>
+
+    <section>
+      <h2>Data sharing</h2>
+      <p>
+        Apart from the processing described above, your information is not shared with anyone. The developer does not
+        sell, rent or trade your information, does not show ads and does not track you across other apps or websites.
+      </p>
+    </section>
+
+    <section>
+      <h2>Security</h2>
+      <p>
+        Information sent for processing travels over encrypted connections (HTTPS). Because your journal is stored on
+        your phone, keeping your device secure, for example with a screen lock, also protects your journal.
+      </p>
+    </section>
+
+    <section>
+      <h2>Your choices and rights</h2>
+      <p>
+        Because your journal is stored on your device, you are in control of it: you can view, change and delete your
+        entries in the app at any time, or delete everything by uninstalling it. Depending on where you live, you may
+        also have rights under data protection law, such as the right to ask what information is held about you or to
+        complain to a data protection authority. To ask a question or make a request, contact the email address above.
+      </p>
+    </section>
+
+    <section>
+      <h2>Not a medical service</h2>
+      <p>
+        Echoes is a journal. It is not a medical or mental health service, and moods and summaries are automatic
+        estimates that can be wrong. If you are struggling, please reach out to someone you trust or find a helpline
+        at <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Children</h2>
+      <p>Echoes is not intended for children under 16.</p>
+    </section>
+
+    <section>
+      <h2>Changes to this policy</h2>
+      <p>
+        This policy may be updated as Echoes changes, for example when new features are added. Any changes will be
+        published on this page with a new effective date.
+      </p>
+    </section>
+
+    <a class="back-link" href="/echoes">← Back to the Echoes website</a>
+
+  </main>
+
+</body>
+</html>
