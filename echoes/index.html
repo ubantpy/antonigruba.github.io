@@ -387,17 +387,35 @@
       gap: 12px;
       padding: 8px 0 18px;
     }
+    /* The app's recording squircle: 140px with a 40px corner radius, scaled down */
     .record-btn {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: 36px 0 26px;
+      border-radius: 29px;
       background: var(--accent);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       display: grid;
       place-items: center;
-      box-shadow: 0 0 0 10px rgba(62, 155, 120, 0.18), 0 0 0 22px rgba(62, 155, 120, 0.08);
     }
-    .record-btn svg { width: 36px; height: 36px; }
-    .record-time { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 12px; }
+    .record-btn svg { width: 40px; height: 40px; position: relative; }
+    /* Echo rings: expand and fade outwards from the squircle, like the app */
+    .record-btn .ring {
+      position: absolute;
+      inset: -1px;
+      border-radius: 29px;
+      border: 1.5px solid var(--accent);
+      opacity: 0;
+      animation: echo-ring 2s linear infinite;
+    }
+    .record-btn .ring:nth-child(2) { animation-delay: 0.65s; }
+    .record-btn .ring:nth-child(3) { animation-delay: 1.3s; }
+    @keyframes echo-ring {
+      from { transform: scale(1); opacity: 0.55; }
+      to { transform: scale(1.7); opacity: 0; }
+    }
+    .record-time { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
     .record-hint { font-size: 0.78rem; color: var(--muted); }
 
     .transcript {
@@ -573,6 +591,7 @@
       html { scroll-behavior: auto; }
       .js .reveal { opacity: 1; transform: none; transition: none; }
       .status .dot { animation: none; }
+      .record-btn .ring { animation: none; opacity: 0.25; transform: scale(1.25); }
     }
 
     /* ── Tablet ─────────────────────────────────────────── */
@@ -742,10 +761,11 @@
             <p class="card-label">Recording</p>
             <div class="record">
               <div class="record-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#1C201E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+                <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+                <svg viewBox="0 0 24 24" fill="#1C201E" aria-hidden="true"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
               </div>
               <p class="record-time">0:42</p>
-              <p class="record-hint">Talk for up to 3 minutes</p>
+              <p class="record-hint">Tap to finish and save</p>
             </div>
           </div>
         </div>
