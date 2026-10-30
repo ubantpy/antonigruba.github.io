@@ -404,6 +404,7 @@ textarea { min-height: 120px; }
     align-self: flex-start;
     margin-top: 0.5rem;
 }
+.form-submit:disabled { opacity: 0.6; cursor: default; transform: none; box-shadow: none; }
 
 /* ─── Footer ─────────────────────────────────────── */
 footer {
