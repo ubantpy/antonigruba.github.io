@@ -52,15 +52,40 @@ window.addEventListener('DOMContentLoaded', handleProjectLink);
 // Fires when hash changes (clicking link on same page)
 window.addEventListener('hashchange', handleProjectLink);
 
-// Form submit
-function handleSubmit(e) {
+// Form submit: send to Formspree in the background so visitors stay on the page
+async function handleSubmit(e) {
     e.preventDefault();
     const form = e.target;
+    const button = form.querySelector('.form-submit');
     const success = document.getElementById('form-success');
-    success.style.display = 'block';
-    form.reset();
-    setTimeout(() => success.style.display = 'none', 5000);
+    const error = document.getElementById('form-error');
+    success.style.display = 'none';
+    error.style.display = 'none';
+    button.disabled = true;
+    button.textContent = 'Sending…';
+    try {
+        const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+        });
+        if (!res.ok) throw new Error(res.status);
+        // Tell Analytics whether this was an Echoes test request, a project access request or a plain message
+        const message = form.message.value;
+        const kind = message.includes('test Echoes') ? 'echoes_test'
+            : message.includes('request access') ? 'project_access' : 'message';
+        if (typeof gtag === 'function') gtag('event', 'generate_lead', { form_kind: kind });
+        form.reset();
+        success.style.display = 'block';
+        setTimeout(() => success.style.display = 'none', 8000);
+    } catch {
+        error.style.display = 'block';
+    } finally {
+        button.disabled = false;
+        button.textContent = 'Send Message →';
+    }
 }
+document.querySelector('#contact form').addEventListener('submit', handleSubmit);
 
 // Simple view toggle
 function openSimpleView() {
