@@ -734,7 +734,7 @@ footer span { color: rgba(255,255,255,0.8); }
     .projects-2col { grid-template-columns: 1fr; }
     .skills-grid { grid-template-columns: 1fr 1fr; }
     .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .timeline-item { grid-template-columns: 1fr; }
+    .timeline-item { grid-template-columns: 1fr; gap: 0.3rem; }
     .timeline-item::before { display: none; }
     .timeline-dot { display: none; }
     .timeline-date { text-align: left; }
