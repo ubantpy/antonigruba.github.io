@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9PYTMMY21R"></script>
+  <script src="/analytics.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kasa: Personal Finance</title>
+  <meta name="description" content="Kasa is a free, simple app for tracking what you spend. Budgets, bills and a clear monthly overview, in any currency. No account, no bank connection: your money stays on your phone.">
+  <link rel="canonical" href="https://antonigruba.work/kasa/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Antoni Gruba">
+  <meta property="og:title" content="Kasa: Personal Finance">
+  <meta property="og:description" content="A free, simple app for tracking what you spend. No account, no bank connection: your money stays on your phone.">
+  <meta property="og:url" content="https://antonigruba.work/kasa/">
+  <meta property="og:image" content="https://antonigruba.work/images/kasa-app-screenshots.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="600">
+  <meta property="og:image:alt" content="Kasa app screens">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#FBFBFC" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121418" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Tokens (Kasa's planned colours, light and dark) ──
+       The screens on this page are drawn in HTML, not screenshots,
+       so they follow the app's look by changing these values. */
+    :root {
+      --bg:       #FBFBFC;
+      --surface:  #FFFFFF;
+      --soft:     #F1F2F5;
+      --line:     #E7E9ED;
+      --text:     #14171C;
+      --muted:    #6E7480;
+      --faint:    #B5BAC4;
+      --accent:   #2D55E0;
+      --on-accent:#FFFFFF;
+      --income:   #1C8A57;
+      --shadow:   0 24px 60px rgba(20, 23, 28, 0.12), 0 0 0 8px #EEF0F3;
+      /* category tints: background, icon */
+      --sage-t: #E3F1E7;  --sage-i: #2F7A4A;
+      --apricot-t: #FCEBDD; --apricot-i: #B3612A;
+      --sky-t: #E2EEFA;   --sky-i: #2E64A3;
+      --sand-t: #F5EEDC;  --sand-i: #8A6A1F;
+      --coral-t: #FDE6E0; --coral-i: #B84A32;
+      --plum-t: #F6E4F2;  --plum-i: #94407F;
+      --teal-t: #DEF2F1;  --teal-i: #1D7F7A;
+      --slate-t: #E8EBEF; --slate-i: #4B5563;
+      --radius-card: 18px;
+      --radius-pill: 40px;
+      --gutter: 40px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:       #121418;
+        --surface:  #1A1D23;
+        --soft:     #1B1E24;
+        --line:     #262A32;
+        --text:     #ECEEF2;
+        --muted:    #8F96A3;
+        --faint:    #4A505B;
+        --accent:   #7B95FF;
+        --on-accent:#121418;
+        --income:   #55C78F;
+        --shadow:   0 24px 60px rgba(0, 0, 0, 0.5), 0 0 0 8px #0C0E11;
+        --sage-t: #1E2E24;  --sage-i: #7CC596;
+        --apricot-t: #33241A; --apricot-i: #EDA676;
+        --sky-t: #1B2633;   --sky-i: #83B2E8;
+        --sand-t: #2E2818;  --sand-i: #D9BA6A;
+        --coral-t: #34201B; --coral-i: #F09C86;
+        --plum-t: #2F1C2B;  --plum-i: #DB92C8;
+        --teal-t: #172C2B;  --teal-i: #6FCFC8;
+        --slate-t: #23272D; --slate-i: #AEB6C2;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; height: auto; }
+    .num { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    /* ── Nav ────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+
+    .nav-back {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    .nav-brand {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text);
+    }
+
+    .nav-pill {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--on-accent);
+      background: var(--accent);
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .nav-pill:hover { opacity: 0.88; }
+
+    /* ── Buttons and status ─────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      transition: opacity 0.2s;
+    }
+    .btn-primary { background: var(--accent); color: var(--on-accent); }
+    .btn-primary:hover { opacity: 0.88; }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .status .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 64px;
+      padding-top: 88px;
+      padding-bottom: 96px;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4.1rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .hero-title em { font-style: normal; color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 510px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px 24px;
+    }
+
+    /* ── Phone mock-up (Home screen) ────────────────────── */
+    .phone {
+      width: 300px;
+      max-width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 40px;
+      padding: 12px 0 0;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .screen { display: flex; flex-direction: column; }
+    .scr-top {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 18px 0;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .scr-top b { color: var(--text); font-weight: 600; }
+    .scr-hero { padding: 12px 18px 14px; border-bottom: 1px solid var(--line); }
+    .scr-label { font-size: 0.7rem; color: var(--muted); }
+    .scr-big { font-size: 2rem; font-weight: 500; letter-spacing: -0.03em; margin-top: 2px; }
+    .scr-big small { font-size: 0.95rem; color: var(--muted); margin-left: 4px; }
+    .scr-sum { display: flex; gap: 16px; margin-top: 8px; font-size: 0.7rem; color: var(--muted); }
+    .scr-sum b { color: var(--text); font-weight: 500; }
+    .scr-sum .in b { color: var(--income); }
+
+    .scr-next {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 12px 14px 2px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: var(--soft);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    .scr-next b { color: var(--text); font-weight: 600; }
+
+    .scr-day {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 18px 4px;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .tx {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 18px;
+      font-size: 0.8rem;
+    }
+    .tx .grow { flex: 1; min-width: 0; }
+    .tx .t { font-weight: 500; }
+    .tx .s { font-size: 0.66rem; color: var(--muted); }
+    .tx .in { color: var(--income); }
+    .ic {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      background: var(--t, var(--soft));
+      color: var(--i, var(--text));
+    }
+    .ic svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .sage    { --t: var(--sage-t);    --i: var(--sage-i); }
+    .apricot { --t: var(--apricot-t); --i: var(--apricot-i); }
+    .sky     { --t: var(--sky-t);     --i: var(--sky-i); }
+    .sand    { --t: var(--sand-t);    --i: var(--sand-i); }
+    .coral   { --t: var(--coral-t);   --i: var(--coral-i); }
+    .plum    { --t: var(--plum-t);    --i: var(--plum-i); }
+    .teal    { --t: var(--teal-t);    --i: var(--teal-i); }
+    .slate   { --t: var(--slate-t);   --i: var(--slate-i); }
+
+    .scr-nav {
+      position: relative;
+      display: flex;
+      justify-content: space-around;
+      margin-top: 12px;
+      padding: 10px 12px 16px;
+      border-top: 1px solid var(--line);
+      font-size: 0.62rem;
+      color: var(--muted);
+    }
+    .scr-nav .on { color: var(--text); font-weight: 600; }
+    .scr-fab {
+      position: absolute;
+      right: 16px;
+      top: -48px;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 22px;
+      padding: 8px 16px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* ── Sections ───────────────────────────────────────── */
+    section { padding: 96px 0; }
+    .band { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+    .section-tag {
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-heading {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 580px;
+      line-height: 1.7;
+    }
+
+    /* ── Feature rows ───────────────────────────────────── */
+    .features { display: flex; flex-direction: column; gap: 104px; }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+      align-items: center;
+      gap: 64px;
+    }
+    .feature-row.flip { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); }
+    .feature-row.flip .feature-text { order: 2; }
+    .feature-row.flip .card { order: 1; }
+
+    .feature-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .feature-heading {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .feature-body { font-size: 0.98rem; color: var(--muted); line-height: 1.75; }
+    .feature-body + .feature-body { margin-top: 12px; }
+
+    /* Card visuals */
+    .card {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-card);
+      padding: 22px;
+    }
+
+    .card-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+
+    /* Add */
+    .seg { display: flex; gap: 16px; font-size: 0.82rem; color: var(--muted); border-bottom: 1px solid var(--line); }
+    .seg span { padding-bottom: 8px; }
+    .seg .on { color: var(--text); font-weight: 600; border-bottom: 2px solid var(--text); }
+    .sum-line { margin-top: 16px; font-size: 0.78rem; color: var(--muted); text-align: right; }
+    .amount { font-size: 2.2rem; font-weight: 500; letter-spacing: -0.03em; text-align: right; line-height: 1.2; }
+    .amount small { font-size: 0.95rem; color: var(--muted); margin-left: 4px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 4px 10px 4px 6px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .chip .ic { width: 20px; height: 20px; border-radius: 6px; background: transparent; }
+    .chip .ic svg { width: 14px; height: 14px; }
+    .chip.on { background: var(--text); border-color: var(--text); color: var(--bg); }
+    .chip.on .ic { color: var(--bg); }
+    .hint {
+      margin-top: 14px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: var(--soft);
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+    .hint b { color: var(--text); font-weight: 600; }
+    .keys { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: 14px; }
+    .keys span {
+      display: grid;
+      place-items: center;
+      height: 34px;
+      border-radius: 9px;
+      background: var(--soft);
+      font-size: 0.9rem;
+    }
+    .keys .save { background: var(--accent); color: var(--on-accent); font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 0.8rem; }
+
+    /* Overview */
+    .ov-big { font-size: 1.7rem; font-weight: 500; letter-spacing: -0.03em; }
+    .ov-big small { font-size: 0.85rem; color: var(--muted); margin-left: 4px; }
+    .take { margin: 8px 0 16px; font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+    .take b { color: var(--text); font-weight: 600; }
+    .cat + .cat { margin-top: 12px; }
+    .cat .hd { display: flex; justify-content: space-between; gap: 12px; font-size: 0.8rem; }
+    .cat .hd span:last-child { color: var(--muted); }
+    .bar { height: 6px; background: var(--soft); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+    .bar i { display: block; height: 100%; border-radius: 3px; background: var(--text); }
+    .cat.lead .bar i { background: var(--accent); }
+
+    /* Budgets */
+    .bud-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .bud-name { font-weight: 600; }
+    .bud-period { font-size: 0.75rem; color: var(--muted); }
+    .bud-left { margin-top: 12px; font-size: 0.72rem; color: var(--muted); }
+    .bud-amt { font-size: 1.7rem; font-weight: 500; letter-spacing: -0.03em; }
+    .bud-amt small { font-size: 0.85rem; color: var(--muted); margin-left: 4px; }
+    .bud-bar { position: relative; height: 8px; background: var(--soft); border-radius: 4px; margin: 12px 0 6px; }
+    .bud-bar i { position: absolute; inset: 0 auto 0 0; width: 34%; background: var(--text); border-radius: 4px; }
+    .bud-bar b { position: absolute; top: -4px; bottom: -4px; left: 40%; width: 2px; background: var(--accent); border-radius: 1px; }
+    .bud-meta { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--muted); }
+    .bud-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+    .bud-grid div { background: var(--soft); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+    .bud-grid p { font-size: 0.68rem; color: var(--muted); }
+    .bud-grid strong { display: block; font-size: 1rem; font-weight: 500; margin-top: 2px; }
+
+    /* Scheduled */
+    .sch { display: flex; flex-direction: column; }
+    .sch .tx { padding: 9px 0; border-bottom: 1px solid var(--line); }
+    .sch .tx:last-child { border-bottom: 0; }
+    .fixed {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--soft);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .fixed b { color: var(--text); font-weight: 500; }
+
+    /* Import */
+    .file {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      font-size: 0.82rem;
+    }
+    .file .s { font-size: 0.7rem; color: var(--muted); }
+    .checks { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 16px 0 18px; }
+    .checks li { display: flex; gap: 10px; align-items: baseline; font-size: 0.84rem; color: var(--muted); }
+    .checks li::before { content: '✓'; color: var(--income); font-weight: 600; flex-shrink: 0; }
+    .checks b { color: var(--text); font-weight: 500; }
+    .wide-btn {
+      display: block;
+      text-align: center;
+      padding: 11px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: var(--on-accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    /* ── Small features grid ────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .tile {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-card);
+      padding: 24px;
+    }
+    .tile h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; }
+    .tile p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Privacy ────────────────────────────────────────── */
+    .privacy-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .privacy-points h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; }
+    .privacy-points p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
+    .privacy-link {
+      display: inline-block;
+      margin-top: 36px;
+      font-weight: 600;
+      color: var(--accent);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .privacy-link:hover { border-color: var(--accent); }
+
+    /* ── Status ─────────────────────────────────────────── */
+    .cta {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 56px 40px;
+      text-align: center;
+    }
+    .cta .section-sub { margin: 0 auto 28px; }
+
+    /* ── About ──────────────────────────────────────────── */
+    .about {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .about-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 2px solid var(--line);
+    }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .about-name { font-size: 1.4rem; font-weight: 600; margin-bottom: 10px; }
+    .about-body { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 16px; }
+    .about-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+    .about-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .about-link:hover { border-color: var(--accent); }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    footer { border-top: 1px solid var(--line); }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 24px;
+      padding-top: 28px;
+      padding-bottom: 28px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── Reveal animation (only when JavaScript runs) ───── */
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .js .reveal.visible { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .js .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ── Tablet ─────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      :root { --gutter: 24px; }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: center;
+        text-align: center;
+        gap: 56px;
+        padding-top: 64px;
+        padding-bottom: 72px;
+      }
+      .hero-sub { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+
+      section { padding: 72px 0; }
+
+      .features { gap: 72px; }
+      .feature-row,
+      .feature-row.flip {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+      }
+      .feature-row.flip .feature-text,
+      .feature-row .feature-text { order: 1; }
+      .feature-row.flip .card,
+      .feature-row .card { order: 2; max-width: 440px; }
+
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .privacy-points { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    }
+
+    /* ── Phone ──────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      :root { --gutter: 16px; }
+
+      .nav-back { display: none; }
+      .nav-pill { padding: 8px 14px; }
+
+      .hero { padding-top: 48px; padding-bottom: 56px; }
+      .hero-sub { font-size: 1rem; }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { width: 100%; }
+
+      .phone { width: 280px; border-radius: 36px; }
+
+      section { padding: 56px 0; }
+
+      .features { gap: 56px; }
+      .card { padding: 18px; }
+
+      .grid { grid-template-columns: minmax(0, 1fr); margin-top: 32px; }
+
+      .cta { padding: 40px 20px; border-radius: 24px; }
+
+      .about { flex-direction: column; text-align: center; gap: 20px; }
+      .about-links { justify-content: center; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Category icons, drawn once and reused -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.4 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6"/><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/></symbol>
+    <symbol id="i-cup" viewBox="0 0 24 24"><path d="M4 8h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2M8 3v2M12 3v2"/></symbol>
+    <symbol id="i-bus" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 17v3M16 17v3"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M8 5v4M16 5v4"/></symbol>
+    <symbol id="i-case" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2M3 12h18"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h4"/></symbol>
+  </svg>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container nav-inner">
+      <a class="nav-back" href="https://antonigruba.work">← antonigruba.work</a>
+      <a class="nav-brand" href="#top" aria-label="Kasa, back to top">KASA</a>
+      <a class="nav-pill" href="/#contact">Get in touch</a>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <div class="container hero">
+      <div>
+        <p class="eyebrow">Personal finance · Android</p>
+        <h1 class="hero-title">
+          Know where your<br>
+          <em>money goes.</em>
+        </h1>
+        <p class="hero-sub">
+          Kasa is a free, simple app for tracking what you spend and earn. Add an expense in a few taps, set budgets, plan your bills and see each month at a glance. No account and no bank connection: your money stays on your phone.
+        </p>
+        <div class="hero-actions">
+          <span class="status"><span class="dot"></span>In development · Android first</span>
+        </div>
+      </div>
+
+      <div class="phone" role="img" aria-label="An example of the Kasa Home screen">
+        <div class="screen">
+          <div class="scr-top"><span><b>November</b> ▾</span><span>All wallets ▾</span></div>
+          <div class="scr-hero">
+            <p class="scr-label">Total balance</p>
+            <p class="scr-big num">6 374.44<small>zł</small></p>
+            <div class="scr-sum num"><span class="in">In <b>+5 000.00</b></span><span>Out <b>−2 325.50</b></span></div>
+          </div>
+          <div class="scr-next"><span>Next: <b>Rent</b> · 1 Dec</span><span class="num">−2 000.00</span></div>
+          <div class="scr-day"><span>Thu 12 Nov</span><span class="num">−100.40</span></div>
+          <div class="tx">
+            <span class="ic sage"><svg><use href="#i-cart"/></svg></span>
+            <div class="grow"><p class="t">Groceries</p><p class="s">Weekly shop · Cash</p></div>
+            <span class="num">−86.40</span>
+          </div>
+          <div class="tx">
+            <span class="ic apricot"><svg><use href="#i-cup"/></svg></span>
+            <div class="grow"><p class="t">Coffee</p><p class="s">Food &amp; Drink · Card</p></div>
+            <span class="num">−14.00</span>
+          </div>
+          <div class="scr-day"><span>Wed 11 Nov</span><span class="num">+4 787.70</span></div>
+          <div class="tx">
+            <span class="ic teal"><svg><use href="#i-case"/></svg></span>
+            <div class="grow"><p class="t">Salary</p><p class="s">Work · Card</p></div>
+            <span class="num in">+5 000.00</span>
+          </div>
+          <div class="tx">
+            <span class="ic coral"><svg><use href="#i-bolt"/></svg></span>
+            <div class="grow"><p class="t">Electricity</p><p class="s">Bills · Card</p></div>
+            <span class="num">−212.30</span>
+          </div>
+          <div class="scr-nav">
+            <span class="scr-fab">+ Add</span>
+            <span class="on">Home</span><span>Overview</span><span>Budgets</span><span>More</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <section style="padding-top: 0;">
+      <div class="container features">
+
+        <!-- Add -->
+        <div class="feature-row reveal">
+          <div class="feature-text">
+            <span class="feature-label">Add</span>
+            <h2 class="feature-heading">An expense in<br>a few seconds.</h2>
+            <p class="feature-body">
+              Type the amount on the built-in keypad, which also adds and multiplies, so 25 + 5 is just 30. Pick a category and you're done. Kasa learns from your notes: write "Coffee" again and the category is already picked.
+            </p>
+            <p class="feature-body">
+              Add a receipt photo, the place, labels or a different currency if you want to. You never have to.
+            </p>
+          </div>
+          <div class="card" role="img" aria-label="An example of adding an expense">
+            <div class="seg"><span class="on">Expense</span><span>Income</span><span>Transfer</span></div>
+            <p class="sum-line num">25+5</p>
+            <p class="amount num">30.00<small>zł</small></p>
+            <div class="chips">
+              <span class="chip on"><span class="ic"><svg><use href="#i-cup"/></svg></span>Food &amp; Drink</span>
+              <span class="chip"><span class="ic sage"><svg><use href="#i-cart"/></svg></span>Groceries</span>
+              <span class="chip"><span class="ic sky"><svg><use href="#i-bus"/></svg></span>Transport</span>
+            </div>
+            <p class="hint">Note <b>Coffee</b> · category picked from last time</p>
+            <div class="keys num">
+              <span>7</span><span>8</span><span>9</span><span>+</span>
+              <span>4</span><span>5</span><span>6</span><span>×</span>
+              <span>1</span><span>2</span><span>3</span><span class="save">Save</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overview -->
+        <div class="feature-row flip reveal">
+          <div class="feature-text">
+            <span class="feature-label">Overview</span>
+            <h2 class="feature-heading">See where it went,<br>month by month.</h2>
+            <p class="feature-body">
+              Overview ranks your spending by category and shows money in and out, your balance over time and a few plain numbers: your daily average, how this month compares with the last, and how much you saved. Tap a category to see what's in it.
+            </p>
+          </div>
+          <div class="card" role="img" aria-label="An example of the Overview screen">
+            <p class="card-label">November · spent</p>
+            <p class="ov-big num">2 325.50<small>zł</small></p>
+            <p class="take">That's <b class="num">214.70 zł</b> less than October, and you saved <b>53%</b> of what came in.</p>
+            <div class="cat lead"><div class="hd"><span>Housing</span><span class="num">1 500.00 · 65%</span></div><div class="bar"><i style="width: 100%"></i></div></div>
+            <div class="cat"><div class="hd"><span>Groceries</span><span class="num">412.60 · 18%</span></div><div class="bar"><i style="width: 27.5%"></i></div></div>
+            <div class="cat"><div class="hd"><span>Bills</span><span class="num">212.30 · 9%</span></div><div class="bar"><i style="width: 14%"></i></div></div>
+            <div class="cat"><div class="hd"><span>Food &amp; Drink</span><span class="num">200.60 · 9%</span></div><div class="bar"><i style="width: 13%"></i></div></div>
+          </div>
+        </div>
+
+        <!-- Budgets -->
+        <div class="feature-row reveal">
+          <div class="feature-text">
+            <span class="feature-label">Budgets</span>
+            <h2 class="feature-heading">Know how much<br>is left.</h2>
+            <p class="feature-body">
+              Set a budget for a week, a month, a year or a one-off, for any categories and wallets. Kasa shows how much is left, how much you can spend each day to stay on track, and where you'll end up at your current pace. It lets you know at 75%, at 90% and if you go over.
+            </p>
+          </div>
+          <div class="card" role="img" aria-label="An example budget">
+            <div class="bud-head"><span class="bud-name">Groceries</span><span class="bud-period">1 – 30 Nov</span></div>
+            <p class="bud-left">Left to spend</p>
+            <p class="bud-amt num">787.40<small>zł</small></p>
+            <div class="bud-bar"><i></i><b></b></div>
+            <div class="bud-meta num"><span>412.60 of 1 200.00</span><span>18 days left</span></div>
+            <div class="bud-grid">
+              <div><p>Each day</p><strong class="num">43.74 zł</strong></div>
+              <div><p>At this pace</p><strong class="num">1 031.50 zł</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scheduled -->
+        <div class="feature-row flip reveal">
+          <div class="feature-text">
+            <span class="feature-label">Bills</span>
+            <h2 class="feature-heading">Regular payments<br>add themselves.</h2>
+            <p class="feature-body">
+              Rent, phone, salary: set them up once, weekly, monthly, yearly or anything in between, and Kasa adds them on the day. It can remind you the morning a bill is due, and you can pause one or skip a single payment.
+            </p>
+          </div>
+          <div class="card" role="img" aria-label="An example list of scheduled payments">
+            <p class="card-label">Coming up</p>
+            <div class="sch">
+              <div class="tx">
+                <span class="ic sand"><svg><use href="#i-home"/></svg></span>
+                <div class="grow"><p class="t">Rent</p><p class="s">Tue 1 Dec · every month</p></div>
+                <span class="num">−2 000.00</span>
+              </div>
+              <div class="tx">
+                <span class="ic sky"><svg><use href="#i-phone"/></svg></span>
+                <div class="grow"><p class="t">Phone</p><p class="s">Sat 5 Dec · every month</p></div>
+                <span class="num">−45.00</span>
+              </div>
+              <div class="tx">
+                <span class="ic plum"><svg><use href="#i-film"/></svg></span>
+                <div class="grow"><p class="t">Streaming</p><p class="s">Thu 10 Dec · every month</p></div>
+                <span class="num">−29.99</span>
+              </div>
+              <div class="tx">
+                <span class="ic teal"><svg><use href="#i-case"/></svg></span>
+                <div class="grow"><p class="t">Salary</p><p class="s">Thu 10 Dec · every month</p></div>
+                <span class="num in">+5 000.00</span>
+              </div>
+            </div>
+            <div class="fixed"><span>Fixed costs a month</span><b class="num">2 074.99 zł</b></div>
+          </div>
+        </div>
+
+        <!-- Import -->
+        <div class="feature-row reveal">
+          <div class="feature-text">
+            <span class="feature-label">Moving in</span>
+            <h2 class="feature-heading">Bring your<br>history with you.</h2>
+            <p class="feature-body">
+              Coming from Spendee? Export your data there and open the file in Kasa: your wallets, categories and labels come across with every transaction. Any other app or bank statement that saves a CSV or Excel file works too: match the columns once and Kasa does the rest.
+            </p>
+            <p class="feature-body">
+              Import a newer Spendee export later and only the new transactions are added. Nothing is doubled.
+            </p>
+          </div>
+          <div class="card" role="img" aria-label="An example of importing a file">
+            <p class="card-label">Import</p>
+            <div class="file">
+              <span class="ic slate"><svg><use href="#i-file"/></svg></span>
+              <div><p>transactions_export.csv</p><p class="s">Spendee export</p></div>
+            </div>
+            <ul class="checks">
+              <li><span><b class="num">1 248</b> transactions ready</span></li>
+              <li><span><b>2</b> wallets and <b>14</b> categories matched</span></li>
+              <li><span><b class="num">36</b> already in Kasa, skipped</span></li>
+            </ul>
+            <span class="wide-btn">Import 1 212 transactions</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Everything else -->
+    <section class="band">
+      <div class="container reveal">
+        <p class="section-tag">Extras</p>
+        <h2 class="section-heading">Small things that help.</h2>
+        <div class="grid">
+          <div class="tile">
+            <h3>Wallets and currencies</h3>
+            <p>Cash, card, savings: as many wallets as you like, each in its own currency. Over 160 currencies, with exchange rates updated daily.</p>
+          </div>
+          <div class="tile">
+            <h3>Find anything</h3>
+            <p>Search by note, amount, category, label or date. Select several transactions to change or delete them at once.</p>
+          </div>
+          <div class="tile">
+            <h3>Locked and private</h3>
+            <p>Lock Kasa with a passcode or your fingerprint. Hide every amount with one tap, or by shaking the phone, when someone is looking.</p>
+          </div>
+          <div class="tile">
+            <h3>Night owls welcome</h3>
+            <p>Tell Kasa when your day starts, and a taxi home at 2am still counts for the night out it belongs to.</p>
+          </div>
+          <div class="tile">
+            <h3>Backup and export</h3>
+            <p>Save everything to one file and restore it on a new phone, or export to CSV or Excel for any dates you choose.</p>
+          </div>
+          <div class="tile">
+            <h3>Light and dark</h3>
+            <p>One calm design in both, following your phone's setting or the one you pick.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy -->
+    <section>
+      <div class="container reveal">
+        <p class="section-tag">Privacy</p>
+        <h2 class="section-heading">Your money stays<br>on your phone.</h2>
+        <div class="privacy-points">
+          <div>
+            <h3>Stored on your device</h3>
+            <p>Transactions, budgets and settings are saved in the app on your phone, not on a server.</p>
+          </div>
+          <div>
+            <h3>No account, no bank login</h3>
+            <p>No sign-up and no password to remember, and Kasa never asks for your bank details. The only thing it downloads is exchange rates.</p>
+          </div>
+          <div>
+            <h3>No ads, no tracking</h3>
+            <p>The app has no ads and no analytics, and your data is never sold.</p>
+          </div>
+        </div>
+        <a class="privacy-link" href="privacy-policy/">Read the privacy policy →</a>
+      </div>
+    </section>
+
+    <!-- Status -->
+    <section style="padding-top: 0;">
+      <div class="container reveal">
+        <div class="cta">
+          <h2 class="section-heading">Still being built.</h2>
+          <p class="section-sub">
+            Kasa isn't on the app stores yet. It's coming to Android first. If you'd like to hear when it's ready, or have an idea for it, send me a message.
+          </p>
+          <a class="btn btn-primary" href="/#contact">Get in touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="band">
+      <div class="container about reveal">
+        <div class="about-photo">
+          <img src="../images/profile-pic.png" alt="Antoni Gruba">
+        </div>
+        <div>
+          <p class="section-tag">The developer</p>
+          <h2 class="about-name">Antoni Gruba</h2>
+          <p class="about-body">
+            Kasa is the app I use for my own spending. I wanted one that is free, quick to use and keeps my finances on my phone, without bank connections or a subscription, so I'm building it myself.
+          </p>
+          <div class="about-links">
+            <a class="about-link" href="https://github.com/ubantpy" target="_blank" rel="noopener">GitHub</a>
+            <a class="about-link" href="https://antonigruba.work">Portfolio</a>
+            <a class="about-link" href="https://antonigruba.work/chalkboard">Chalkboard App</a>
+            <a class="about-link" href="https://antonigruba.work/echoes">Echoes App</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-inner">
+      <p>© 2026 Antoni Gruba</p>
+      <div class="footer-links">
+        <a href="privacy-policy/">Privacy policy</a>
+        <a href="/#contact">Contact</a>
+        <a href="https://antonigruba.work">antonigruba.work</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal: content stays visible if this script doesn't run
+    document.documentElement.classList.add('js');
+    const els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      els.forEach(el => io.observe(el));
+    } else {
+      els.forEach(el => el.classList.add('visible'));
+    }
+  </script>
+
+</body>
+</html>
