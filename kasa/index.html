@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9PYTMMY21R"></script>
+  <script src="/analytics.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kasa: Personal Finance</title>
+  <meta name="description" content="Kasa is a free, simple app for tracking what you spend. Budgets, bills and a clear monthly overview, in any currency. No account, no bank connection: your money stays on your phone.">
+  <link rel="canonical" href="https://antonigruba.work/kasa/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Antoni Gruba">
+  <meta property="og:title" content="Kasa: Personal Finance">
+  <meta property="og:description" content="A free, simple app for tracking what you spend. No account, no bank connection: your money stays on your phone.">
+  <meta property="og:url" content="https://antonigruba.work/kasa/">
+  <meta property="og:image" content="https://antonigruba.work/images/kasa-app-screenshots.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="600">
+  <meta property="og:image:alt" content="Kasa app screens">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#1FAF7A" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E1216" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ── Tokens (the app's own colours, light and dark) ─── */
+    :root {
+      --bg:          #F3F5F7;
+      --surface:     #FFFFFF;
+      --soft:        #F7F8FA;
+      --line:        #E3E7EC;
+      --text:        #16202A;
+      --muted:       #6B7785;
+      --brand:       #1FAF7A;
+      --on-brand:    #FFFFFF;
+      --accent-text: #138A5F;
+      --frame:       #16202A;
+      --shadow:      0 24px 60px rgba(22, 32, 42, 0.16);
+      --radius-card: 18px;
+      --radius-pill: 40px;
+      --gutter: 40px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:          #0E1216;
+        --surface:     #181D23;
+        --soft:        #20262D;
+        --line:        #2A3139;
+        --text:        #ECEFF2;
+        --muted:       #9AA5B1;
+        --brand:       #2BC48A;
+        --on-brand:    #08140F;
+        --accent-text: #2BC48A;
+        --frame:       #2A3139;
+        --shadow:      0 24px 60px rgba(0, 0, 0, 0.55);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; height: auto; }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    /* ── Nav ────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+
+    .nav-back {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    .nav-brand {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      color: var(--accent-text);
+    }
+
+    .nav-pill {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--on-brand);
+      background: var(--brand);
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .nav-pill:hover { opacity: 0.88; }
+
+    /* ── Buttons and status ─────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      transition: opacity 0.2s;
+    }
+    .btn-primary { background: var(--brand); color: var(--on-brand); }
+    .btn-primary:hover { opacity: 0.88; }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .status .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--brand);
+      flex-shrink: 0;
+    }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 64px;
+      padding-top: 80px;
+      padding-bottom: 96px;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-text);
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4.1rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      margin-bottom: 24px;
+    }
+    .hero-title em { font-style: normal; color: var(--accent-text); }
+
+    .hero-sub {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 510px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px 24px;
+    }
+
+    /* ── Phone frame around a real app screenshot ───────────
+       Each screen has a light and a dark version; the page shows
+       the one that matches the visitor's setting. */
+    .phone {
+      width: 300px;
+      max-width: 100%;
+      flex-shrink: 0;
+      border: 9px solid var(--frame);
+      border-radius: 42px;
+      overflow: hidden;
+      background: var(--frame);
+      box-shadow: var(--shadow);
+    }
+    .phone img { width: 100%; border-radius: 33px; }
+    .phone.small { width: 280px; }
+
+    /* ── Sections ───────────────────────────────────────── */
+    section { padding: 96px 0; }
+    .band { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+    .section-tag {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-text);
+      margin-bottom: 12px;
+    }
+
+    .section-heading {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 580px;
+      line-height: 1.7;
+    }
+
+    /* ── Feature rows ───────────────────────────────────── */
+    .features { display: flex; flex-direction: column; gap: 104px; }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 72px;
+    }
+    .feature-row.flip { grid-template-columns: auto minmax(0, 1fr); }
+    .feature-row.flip .feature-text { order: 2; }
+    .feature-row.flip .phone { order: 1; }
+
+    .feature-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-text);
+      margin-bottom: 12px;
+    }
+
+    .feature-heading {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .feature-body { font-size: 0.98rem; color: var(--muted); line-height: 1.75; max-width: 520px; }
+    .feature-body + .feature-body { margin-top: 12px; }
+
+    /* ── Small features grid ────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .tile {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-card);
+      padding: 24px;
+    }
+    .tile h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .tile p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Privacy ────────────────────────────────────────── */
+    .privacy-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .privacy-points h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .privacy-points p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
+    .privacy-link {
+      display: inline-block;
+      margin-top: 36px;
+      font-weight: 600;
+      color: var(--accent-text);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .privacy-link:hover { border-color: var(--accent-text); }
+
+    /* ── Status ─────────────────────────────────────────── */
+    .cta {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 56px 40px;
+      text-align: center;
+    }
+    .cta .section-sub { margin: 0 auto 28px; }
+
+    /* ── About ──────────────────────────────────────────── */
+    .about {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .about-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 2px solid var(--line);
+    }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .about-name { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+    .about-body { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 16px; }
+    .about-links { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+    .about-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-text);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .about-link:hover { border-color: var(--accent-text); }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    footer { border-top: 1px solid var(--line); }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 24px;
+      padding-top: 28px;
+      padding-bottom: 28px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── Reveal animation (only when JavaScript runs) ───── */
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .js .reveal.visible { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .js .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ── Tablet ─────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      :root { --gutter: 24px; }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: center;
+        text-align: center;
+        gap: 56px;
+        padding-top: 64px;
+        padding-bottom: 72px;
+      }
+      .hero-sub { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+
+      section { padding: 72px 0; }
+
+      .features { gap: 72px; }
+      .feature-row,
+      .feature-row.flip {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: center;
+        gap: 32px;
+      }
+      .feature-row .feature-text { order: 1; justify-self: stretch; }
+      .feature-row .phone,
+      .feature-row.flip .phone { order: 2; }
+
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .privacy-points { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    }
+
+    /* ── Phone ──────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      :root { --gutter: 16px; }
+
+      .nav-back { display: none; }
+      .nav-pill { padding: 8px 14px; }
+
+      .hero { padding-top: 48px; padding-bottom: 56px; }
+      .hero-sub { font-size: 1rem; }
+
+      .phone, .phone.small { width: 260px; border-width: 8px; border-radius: 38px; }
+      .phone img { border-radius: 30px; }
+
+      section { padding: 56px 0; }
+
+      .features { gap: 56px; }
+
+      .grid { grid-template-columns: minmax(0, 1fr); margin-top: 32px; }
+
+      .cta { padding: 40px 20px; border-radius: 24px; }
+
+      .about { flex-direction: column; text-align: center; gap: 20px; }
+      .about-links { justify-content: center; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container nav-inner">
+      <a class="nav-back" href="https://antonigruba.work">← antonigruba.work</a>
+      <a class="nav-brand" href="#top" aria-label="Kasa, back to top">KASA</a>
+      <a class="nav-pill" href="/#contact">Get in touch</a>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <div class="container hero">
+      <div>
+        <p class="eyebrow">Personal finance · Android</p>
+        <h1 class="hero-title">
+          Know where your<br>
+          <em>money goes.</em>
+        </h1>
+        <p class="hero-sub">
+          Kasa is a free, simple app for tracking what you spend and earn. Add an expense in a few taps, set budgets, plan your bills and see each month at a glance. No account and no bank connection: your money stays on your phone.
+        </p>
+        <div class="hero-actions">
+          <span class="status"><span class="dot"></span>In development · Android first</span>
+        </div>
+      </div>
+
+      <!-- Screens are real Kasa screenshots with made-up example data. Swap the files in images/ when the app changes. -->
+      <div class="phone">
+        <picture>
+          <source srcset="images/home-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/home-light.webp" width="600" height="1298" alt="Kasa's Home screen: total balance, income and expenses for November, upcoming scheduled payments and today's transactions">
+        </picture>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <section style="padding-top: 0;">
+      <div class="container features">
+
+        <!-- Add -->
+        <div class="feature-row reveal">
+          <div class="feature-text">
+            <span class="feature-label">Add</span>
+            <h2 class="feature-heading">An expense in<br>a few seconds.</h2>
+            <p class="feature-body">
+              Type the amount on the built-in keypad, which can also add, subtract, multiply and divide, so 25 + 5 is just 30. Pick a category and save. Kasa learns from your notes: write "Coffee" again and the category is already picked.
+            </p>
+            <p class="feature-body">
+              You can also add labels, a receipt photo, the place, another date, a different currency or a repeat. You never have to.
+            </p>
+          </div>
+          <div class="phone small">
+            <picture>
+              <source srcset="images/add-dark.webp" media="(prefers-color-scheme: dark)">
+              <img src="images/add-light.webp" width="600" height="1298" loading="lazy" alt="Adding an expense: 25+5 typed on the keypad makes 30.00 zł, with the Food &amp; Drink category picked and the note Coffee">
+            </picture>
+          </div>
+        </div>
+
+        <!-- Overview -->
+        <div class="feature-row flip reveal">
+          <div class="feature-text">
+            <span class="feature-label">Overview</span>
+            <h2 class="feature-heading">See where it went,<br>month by month.</h2>
+            <p class="feature-body">
+              Overview shows your spending by category, money in and out, your balance over time and a few plain numbers: your daily average, how this period compares with the last one, your savings rate and your biggest expense. Tap a category to see what's in it.
+            </p>
+            <p class="feature-body">
+              Pick any wallets and any period: a week, a month, a year, all time or your own dates.
+            </p>
+          </div>
+          <div class="phone small">
+            <picture>
+              <source srcset="images/overview-dark.webp" media="(prefers-color-scheme: dark)">
+              <img src="images/overview-light.webp" width="600" height="1298" loading="lazy" alt="Overview: a ring chart of November's spending and the list of categories with their share and amount">
+            </picture>
+          </div>
+        </div>
+
+        <!-- Budgets -->
+        <div class="feature-row reveal">
+          <div class="feature-text">
+            <span class="feature-label">Budgets</span>
+            <h2 class="feature-heading">Know how much<br>is left.</h2>
+            <p class="feature-body">
+              Set a budget for a week, a month, a year or a one-off, for any categories, wallets and labels. Kasa shows how much is left, how much you can spend each day to stay on track, and where you'll end up at your current pace. It lets you know at 75%, at 90% and if you go over.
+            </p>
+          </div>
+          <div class="phone small">
+            <picture>
+              <source srcset="images/budget-dark.webp" media="(prefers-color-scheme: dark)">
+              <img src="images/budget-light.webp" width="600" height="1298" loading="lazy" alt="A Groceries budget: 563.24 zł left of 900.00 zł, a recommended 31.29 zł a day, and a chart of spending against the ideal pace">
+            </picture>
+          </div>
+        </div>
+
+        <!-- Scheduled -->
+        <div class="feature-row flip reveal">
+          <div class="feature-text">
+            <span class="feature-label">Bills</span>
+            <h2 class="feature-heading">Regular payments<br>add themselves.</h2>
+            <p class="feature-body">
+              Rent, phone, salary: set them up once, from daily to yearly, and Kasa adds them on the day. It can remind you the morning a bill is due, and you can pause one or skip a single payment. You also see your fixed costs and regular income per month.
+            </p>
+          </div>
+          <div class="phone small">
+            <picture>
+              <source srcset="images/bills-dark.webp" media="(prefers-color-scheme: dark)">
+              <img src="images/bills-light.webp" width="600" height="1298" loading="lazy" alt="Scheduled transactions: fixed costs and regular income per month, then rent, phone, streaming, salary and car insurance with their next dates">
+            </picture>
+          </div>
+        </div>
+
+        <!-- Import -->
+        <div class="feature-row reveal">
+          <div class="feature-text">
+            <span class="feature-label">Moving in</span>
+            <h2 class="feature-heading">Bring your<br>history with you.</h2>
+            <p class="feature-body">
+              Coming from Spendee? Export each wallet there as a CSV file and pick them all at once in Kasa. Wallets are matched by name or created, and your categories, labels and notes come across with every transaction. Import again later and only the new transactions are added.
+            </p>
+            <p class="feature-body">
+              Any other app or bank that saves a CSV or Excel file works too: match the columns once and Kasa does the rest.
+            </p>
+          </div>
+          <div class="phone small">
+            <picture>
+              <source srcset="images/import-dark.webp" media="(prefers-color-scheme: dark)">
+              <img src="images/import-light.webp" width="600" height="1298" loading="lazy" alt="The Import from Spendee screen, with a short explanation and a Choose files button">
+            </picture>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Everything else -->
+    <section class="band">
+      <div class="container reveal">
+        <p class="section-tag">Extras</p>
+        <h2 class="section-heading">Small things that help.</h2>
+        <div class="grid">
+          <div class="tile">
+            <h3>Wallets and currencies</h3>
+            <p>Cash, card, savings: as many wallets as you like, each in its own currency. Over 160 currencies, with exchange rates updated daily.</p>
+          </div>
+          <div class="tile">
+            <h3>Find anything</h3>
+            <p>Search by note, category or amount, and filter by type, wallet, label or date. Long-press to change or delete several transactions at once.</p>
+          </div>
+          <div class="tile">
+            <h3>Locked and private</h3>
+            <p>Lock Kasa with a passcode or your fingerprint. Hide every amount with one tap, or by shaking the phone, when someone is looking.</p>
+          </div>
+          <div class="tile">
+            <h3>Night owls welcome</h3>
+            <p>Tell Kasa when your day starts, and a taxi home at 2am still counts for the night out it belongs to.</p>
+          </div>
+          <div class="tile">
+            <h3>Backup and export</h3>
+            <p>Save everything to one file and restore it on a new phone, or export to CSV or Excel for any dates you choose.</p>
+          </div>
+          <div class="tile">
+            <h3>Light and dark</h3>
+            <p>The same calm design in both, following your phone's setting or the one you pick.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy -->
+    <section>
+      <div class="container reveal">
+        <p class="section-tag">Privacy</p>
+        <h2 class="section-heading">Your money stays<br>on your phone.</h2>
+        <div class="privacy-points">
+          <div>
+            <h3>Stored on your device</h3>
+            <p>Transactions, budgets and settings are saved in the app on your phone, not on a server.</p>
+          </div>
+          <div>
+            <h3>No account, no bank login</h3>
+            <p>No sign-up and no password to remember, and Kasa never asks for your bank details. The only thing it downloads is exchange rates.</p>
+          </div>
+          <div>
+            <h3>No ads, no tracking</h3>
+            <p>The app has no ads and no analytics, and your data is never sold.</p>
+          </div>
+        </div>
+        <a class="privacy-link" href="privacy-policy/">Read the privacy policy →</a>
+      </div>
+    </section>
+
+    <!-- Status -->
+    <section style="padding-top: 0;">
+      <div class="container reveal">
+        <div class="cta">
+          <h2 class="section-heading">Still being built.</h2>
+          <p class="section-sub">
+            Kasa isn't on the app stores yet. It's coming to Android first. If you'd like to hear when it's ready, or have an idea for it, send me a message.
+          </p>
+          <a class="btn btn-primary" href="/#contact">Get in touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="band">
+      <div class="container about reveal">
+        <div class="about-photo">
+          <img src="../images/profile-pic.png" alt="Antoni Gruba">
+        </div>
+        <div>
+          <p class="section-tag">The developer</p>
+          <h2 class="about-name">Antoni Gruba</h2>
+          <p class="about-body">
+            Kasa is the app I use for my own spending. I wanted one that is free, quick to use and keeps my finances on my phone, without bank connections or a subscription, so I'm building it myself.
+          </p>
+          <div class="about-links">
+            <a class="about-link" href="https://github.com/ubantpy" target="_blank" rel="noopener">GitHub</a>
+            <a class="about-link" href="https://antonigruba.work">Portfolio</a>
+            <a class="about-link" href="https://antonigruba.work/chalkboard">Chalkboard App</a>
+            <a class="about-link" href="https://antonigruba.work/echoes">Echoes App</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-inner">
+      <p>© 2026 Antoni Gruba</p>
+      <div class="footer-links">
+        <a href="privacy-policy/">Privacy policy</a>
+        <a href="/#contact">Contact</a>
+        <a href="https://antonigruba.work">antonigruba.work</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal: content stays visible if this script doesn't run
+    document.documentElement.classList.add('js');
+    const els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      els.forEach(el => io.observe(el));
+    } else {
+      els.forEach(el => el.classList.add('visible'));
+    }
+  </script>
+
+</body>
+</html>
