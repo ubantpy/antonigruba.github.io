@@ -7,12 +7,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kasa Budget: Personal Finance</title>
-  <meta name="description" content="Kasa Budget is a free, simple app for tracking what you spend. Budgets, bills and a clear monthly overview, in any currency. No account, no bank connection: your money stays on your phone.">
+  <meta name="description" content="Kasa Budget is a simple app for tracking what you spend. Budgets, bills and a clear monthly overview, free to use, with Kasa Budget Plus for more. No account, no bank connection: your money stays on your phone.">
   <link rel="canonical" href="https://antonigruba.work/kasa/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Antoni Gruba">
   <meta property="og:title" content="Kasa Budget: Personal Finance">
-  <meta property="og:description" content="A free, simple app for tracking what you spend. No account, no bank connection: your money stays on your phone.">
+  <meta property="og:description" content="A simple app for tracking what you spend, free to use. No account, no bank connection: your money stays on your phone.">
   <meta property="og:url" content="https://antonigruba.work/kasa/">
   <meta property="og:image" content="https://antonigruba.work/images/kasa-app-screenshots.jpg">
   <meta property="og:image:width" content="1200">
@@ -319,6 +319,19 @@
     }
     .privacy-link:hover { border-color: var(--accent-text); }
 
+    /* ── Free and Plus ───────────────────────────────────── */
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .plans ul { list-style: none; display: grid; gap: 8px; }
+    .plans li { font-size: 0.92rem; color: var(--muted); line-height: 1.55; padding-left: 22px; position: relative; }
+    .plans li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-text); font-weight: 700; }
+    .plans .plus { border-color: var(--accent-text); }
+    .plans .price { margin-top: 16px; font-size: 0.85rem; }
+
     /* ── Status ─────────────────────────────────────────── */
     .cta {
       background: var(--surface);
@@ -415,6 +428,7 @@
 
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .privacy-points { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+      .plans { grid-template-columns: minmax(0, 1fr); }
     }
 
     /* ── Phone ──────────────────────────────────────────── */
@@ -468,7 +482,7 @@
           <em>money goes.</em>
         </h1>
         <p class="hero-sub">
-          Kasa Budget is a free, simple app for tracking what you spend and earn. Add an expense in a few taps, set budgets, plan your bills and see each month at a glance. No account and no bank connection: your money stays on your phone.
+          Kasa Budget is a simple app for tracking what you spend and earn. Add an expense in a few taps, set a budget, plan your bills and see each month at a glance. It’s free to use, and Kasa Budget Plus adds more. No account and no bank connection: your money stays on your phone.
         </p>
         <div class="hero-actions">
           <span class="status"><span class="dot"></span>In development · Android first</span>
@@ -593,7 +607,7 @@
         <div class="grid">
           <div class="tile">
             <h3>Wallets and currencies</h3>
-            <p>Cash, card, savings: as many wallets as you like, each in its own currency. Over 160 currencies, with exchange rates updated daily.</p>
+            <p>Cash, card, savings: with Plus, as many wallets as you like, each in its own currency. Over 160 currencies, with exchange rates updated daily.</p>
           </div>
           <div class="tile">
             <h3>Find anything</h3>
@@ -634,11 +648,49 @@
             <p>No sign-up and no password to remember, and Kasa Budget never asks for your bank details. The only thing it downloads is exchange rates.</p>
           </div>
           <div>
-            <h3>No ads, no tracking</h3>
-            <p>The app has no ads and no analytics, and your data is never sold.</p>
+            <h3>No tracking</h3>
+            <p>No analytics, and your data is never sold. The only ad is one you choose to watch for a free day of Plus.</p>
           </div>
         </div>
         <a class="privacy-link" href="privacy-policy/">Read the privacy policy →</a>
+      </div>
+    </section>
+
+    <!-- Free and Plus -->
+    <section class="band">
+      <div class="container reveal">
+        <p class="section-tag">Free and Plus</p>
+        <h2 class="section-heading">Free to use.<br>Plus when you want more.</h2>
+        <p class="section-sub">
+          The free version has everything you need for one account. Kasa Budget Plus opens the rest. Nothing you add is ever deleted or held back: if Plus ends, you still see all your wallets and entries, and you can always export everything.
+        </p>
+        <div class="plans">
+          <div class="tile">
+            <h3>Free</h3>
+            <ul>
+              <li>One wallet and one budget</li>
+              <li>Unlimited transactions, categories and labels</li>
+              <li>Scheduled payments and bill reminders</li>
+              <li>Monthly overview: cash flow and categories</li>
+              <li>Search, backup, and export to CSV or Excel</li>
+              <li>Passcode, fingerprint and hidden amounts</li>
+            </ul>
+          </div>
+          <div class="tile plus">
+            <h3>Kasa Budget Plus</h3>
+            <ul>
+              <li>Unlimited wallets and budgets, with budget history</li>
+              <li>Every chart and insight, over any period</li>
+              <li>Entries in other currencies</li>
+              <li>Deposits and returned purchases</li>
+              <li>Receipt photos and places</li>
+              <li>Automatic backups</li>
+              <li>Everything new that comes next</li>
+            </ul>
+            <p class="price">Planned prices: 4.99 zł a month, 29.99 zł a year with 7 days free, or 79.99 zł once. Prices may differ in your country, and Google Play shows the final price before you pay. You can also watch one ad for a free day of Plus.</p>
+          </div>
+        </div>
+        <a class="privacy-link" href="plus-terms/">Read the Kasa Budget Plus terms →</a>
       </div>
     </section>
 
@@ -665,7 +717,7 @@
           <p class="section-tag">The developer</p>
           <h2 class="about-name">Antoni Gruba</h2>
           <p class="about-body">
-            Kasa Budget is the app I use for my own spending. I wanted one that is free, quick to use and keeps my finances on my phone, without bank connections or a subscription, so I'm building it myself.
+            Kasa Budget is the app I use for my own spending. I wanted one that is quick to use and keeps my finances on my phone, without bank connections, so I'm building it myself.
           </p>
           <div class="about-links">
             <a class="about-link" href="https://github.com/ubantpy" target="_blank" rel="noopener">GitHub</a>
@@ -685,6 +737,7 @@
       <p>© 2026 Antoni Gruba</p>
       <div class="footer-links">
         <a href="privacy-policy/">Privacy policy</a>
+        <a href="plus-terms/">Plus terms</a>
         <a href="/#contact">Contact</a>
         <a href="https://antonigruba.work">antonigruba.work</a>
       </div>
